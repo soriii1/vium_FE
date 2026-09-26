@@ -98,32 +98,19 @@ export const MainPage = () => {
                   className="bg-white rounded-lg border border-neutral-100 p-4 w-[240px] h-[140px] justify-between"
                   onPress={() => router.push(`/recipe/${recipe.id}` as any)}
                 >
-                  <View className="gap-3">
-                    <View className="flex-row gap-1">
-                      {recipe.ingredients.map((ingredient) => (
-                        <View
-                          key={ingredient}
-                          className="px-2 py-1 rounded-md bg-primary-200 items-center justify-center"
-                        >
-                          <Text className="text-[12px] font-medium font-sans text-primary-800">
-                            {ingredient}
-                          </Text>
-                        </View>
-                      ))}
-                    </View>
-                    <View className="gap-1">
-                      <Text numberOfLines={1} className="text-[18px] font-medium font-sans text-neutral-800">
-                        {recipe.title}
+                  <Text numberOfLines={1} className="text-[18px] font-semibold font-sans text-primary-800">
+                    {recipe.title}
+                  </Text>
+                  <View className="gap-[7px]">
+                    <Text className="text-text14 font-sans text-text-200">
+                      조리시간{' '}
+                      <Text className="text-text15 font-medium font-sans text-neutral-500">
+                        {recipe.cookTimeMinutes}분
                       </Text>
-                      <Text className="text-[13px] font-sans text-neutral-300">
-                        조리 {recipe.cookTimeMinutes}분 ·{' '}
-                        <Text className="text-primary-700">재료 {recipe.ingredients.length}개 활용</Text>
-                      </Text>
-                    </View>
-                  </View>
-                  <View className="flex-row items-center justify-end gap-1.5">
-                    <Text className="text-[13px] font-sans text-neutral-400">바로가기</Text>
-                    <ChevronRightIcon width={6} height={9} color="#5C5C5C" />
+                    </Text>
+                    <Text numberOfLines={1} className="text-[13px] font-sans text-neutral-400">
+                      {recipe.ingredients.map((ingredient) => `#${ingredient}`).join(' ')}
+                    </Text>
                   </View>
                 </Pressable>
               ))}
