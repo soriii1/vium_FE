@@ -26,7 +26,7 @@ export const OnboardingPage = () => {
             <Text className="text-title md:text-[28px] lg:text-[32px] font-medium text-text-100 mb-[9px] font-sans">
               마지막으로{'\n'}얼마나 자주 장을 보시나요?
             </Text>
-            <Text className="text-text14 md:text-text15 text-text-300 mb-[49px] font-sans">
+            <Text className="text-text14 md:text-text15 text-text-200 mb-[49px] font-sans">
               냉장고 정리 알림에 참고해요!
             </Text>
 
@@ -35,15 +35,13 @@ export const OnboardingPage = () => {
                 <Pressable
                   key={index}
                   onPress={() => setSelectedOption(index)}
-                  className={`h-[42px] md:h-[48px] rounded-lg px-3 md:px-4 justify-center ${
-                    selectedOption === index ? 'bg-neutral-300' : 'bg-neutral-50'
+                  className={`h-[42px] md:h-[48px] rounded-lg border-2 px-2.5 md:px-4 justify-center ${
+                    selectedOption === index
+                      ? 'bg-primary-200 border-primary-600'
+                      : 'bg-white border-neutral-100'
                   }`}
                 >
-                  <Text
-                    className={`text-text15 md:text-text16 font-sans ${
-                      selectedOption === index ? 'text-white' : 'text-text-100'
-                    }`}
-                  >
+                  <Text className="text-text15 md:text-text16 font-sans text-text-100">
                     {option}
                   </Text>
                 </Pressable>
@@ -54,8 +52,8 @@ export const OnboardingPage = () => {
       </View>
 
       <View className="w-full items-center pb-[100px]">
-        <Button onPress={handleStart}>
-          시작하기
+        <Button onPress={handleStart} disabled={selectedOption === null}>
+          비움 시작하기
         </Button>
       </View>
     </View>
