@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
 import { View, Text, ActivityIndicator, Pressable, ScrollView, Alert } from 'react-native';
 import { useRouter } from 'expo-router';
-import { useIngredientUpload, useIngredientsList, FridgeHeader, FridgeGrid } from '@/features/ingredient';
+import {
+  useIngredientUpload,
+  useIngredientsList,
+  useIngredientDispose,
+  FridgeHeader,
+  FridgeGrid,
+} from '@/features/ingredient';
 import { useFridgeCleanup, FridgeCleanupModal } from '@/features/fridge-cleanup';
 import { BottomNavigation } from '@/widgets';
 import { AddButton, Card } from '@/shared/ui';
@@ -13,7 +19,8 @@ export const FridgePage = () => {
   const [isDeleteMode, setIsDeleteMode] = useState(false);
   const [selectedItems, setSelectedItems] = useState<Set<number>>(new Set());
   const { showIngredientUploadOptions } = useIngredientUpload();
-  const { items: fridgeItems, isLoading, error } = useIngredientsList();
+  const { items: fridgeItems, isLoading, error, refresh } = useIngredientsList();
+  const { disposeItems, isDisposing } = useIngredientDispose();
   const { isCleanupModalVisible, openCleanupModal, closeCleanupModal } = useFridgeCleanup();
 
   const handleReceiptPress = () => {
@@ -51,10 +58,17 @@ export const FridgePage = () => {
         {
           text: '삭제',
           style: 'destructive',
-          onPress: () => {
-            console.log('삭제할 항목:', Array.from(selectedItems));
+          onPress: async () => {
+            const targets = fridgeItems.filter((item) => selectedItems.has(item.id));
+            const failedCount = await disposeItems(targets);
+
             setSelectedItems(new Set());
             setIsDeleteMode(false);
+            refresh();
+
+            if (failedCount > 0) {
+              Alert.alert('오류', `${failedCount}개 항목을 삭제하지 못했습니다. 다시 시도해주세요.`);
+            }
           },
         },
       ]
@@ -124,7 +138,12 @@ export const FridgePage = () => {
             <Text className="text-neutral-700 text-text14 font-sans">
               {selectedItems.size}개의 식재료가 선택됨
             </Text>
-            <Pressable onPress={handleDelete} hitSlop={8} className="ml-3">
+            <Pressable
+              onPress={handleDelete}
+              disabled={isDisposing}
+              hitSlop={8}
+              className={`ml-3 ${isDisposing ? 'opacity-50' : ''}`}
+            >
               <TrashIcon width={24} height={24} />
             </Pressable>
           </View>

@@ -1,12 +1,14 @@
 import React, { useEffect, useRef } from 'react';
-import { View, Text, ScrollView, Pressable } from 'react-native';
+import { View, Text, ScrollView, Pressable, ActivityIndicator } from 'react-native';
 import Slider from '@react-native-community/slider';
 import { useRouter } from 'expo-router';
 import { useFridgeCleanupStore } from '../lib/fridgeCleanupStore';
+import { useFridgeCleanupFinish } from '../lib/useFridgeCleanupFinish';
 
 export const FridgeCleanupAmountPage: React.FC = () => {
   const router = useRouter();
   const { items, setRemainingPercent, reset } = useFridgeCleanupStore();
+  const { finish, isSubmitting } = useFridgeCleanupFinish();
   const isFinishingRef = useRef(false);
 
   // 선택된 재료 없이 이 화면으로 바로 들어온 경우 선택 화면으로 돌려보냄
@@ -17,8 +19,10 @@ export const FridgeCleanupAmountPage: React.FC = () => {
     }
   }, [items.length]);
 
-  const handleFinish = () => {
-    // TODO: 백엔드 재고 업데이트 API 연동
+  const handleFinish = async () => {
+    const isSuccess = await finish();
+    if (!isSuccess) return;
+
     isFinishingRef.current = true;
     reset();
     router.replace('/fridge' as any);
@@ -76,12 +80,19 @@ export const FridgeCleanupAmountPage: React.FC = () => {
 
       <View className="px-12 pb-[100px] items-center">
         <Pressable
-          className="bg-neutral-500 rounded-3xl items-center justify-center px-2.5 py-[15px] w-[299px]"
+          className={`bg-neutral-500 rounded-3xl items-center justify-center px-2.5 py-[15px] w-[299px] ${
+            isSubmitting ? 'opacity-50' : ''
+          }`}
           onPress={handleFinish}
+          disabled={isSubmitting}
         >
-          <Text className="text-text-400 text-subtitle text-center font-sans">
-            냉장고 정리 종료
-          </Text>
+          {isSubmitting ? (
+            <ActivityIndicator color="#FFFFFF" />
+          ) : (
+            <Text className="text-text-400 text-subtitle text-center font-sans">
+              냉장고 정리 종료
+            </Text>
+          )}
         </Pressable>
       </View>
     </View>
