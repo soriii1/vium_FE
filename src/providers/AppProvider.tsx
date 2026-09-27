@@ -1,6 +1,11 @@
 import React from 'react';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
+import { Image } from 'expo-image';
+import { cssInterop } from 'nativewind';
+
+// expo-image는 NativeWind 기본 지원 컴포넌트가 아니라 className을 style로 연결해야 적용됨
+cssInterop(Image, { className: 'style' });
 
 // Keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync();

@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { View, Text, Pressable, TextInput, Image, Alert } from 'react-native';
+import { View, Text, Pressable, TextInput, Alert } from 'react-native';
+import { Image } from 'expo-image';
 import { Button } from '@/shared/ui/Button';
 import { router } from 'expo-router';
 import * as ImagePicker from 'expo-image-picker';
-import PhotoIcon from '@/../assets/icons/photo-icon.svg';
+import CameraIcon from '@/../assets/icons/camera-icon.svg';
+import ClearIcon from '@/../assets/icons/clear-icon.svg';
 
 export const ProfilePage = () => {
   const [nickname, setNickname] = useState('');
@@ -48,21 +50,21 @@ export const ProfilePage = () => {
           <View className="items-center">
             <View className="items-center">
               <View className="relative w-[117px] h-[117px] md:w-[140px] md:h-[140px] mb-[42px]">
-                <View className="w-full h-full bg-neutral-100 rounded-full overflow-hidden">
+                <View className="w-full h-full bg-neutral-50 rounded-full border-[3px] border-secondary-400 overflow-hidden">
                   {profileImageUri && (
                     <Image
                       source={{ uri: profileImageUri }}
                       className="w-full h-full"
-                      resizeMode="cover"
+                      contentFit="cover"
                     />
                   )}
                 </View>
 
                 <Pressable
                   onPress={handleImagePick}
-                  className="absolute bottom-0 right-0 w-[36px] h-[36px] md:w-[42px] md:h-[42px]"
+                  className="absolute bottom-1 right-1 w-[29px] h-[29px] md:w-[34px] md:h-[34px]"
                 >
-                  <PhotoIcon width="100%" height="100%" />
+                  <CameraIcon width="100%" height="100%" />
                 </Pressable>
               </View>
 
@@ -77,15 +79,17 @@ export const ProfilePage = () => {
                     placeholderTextColor="#A7A9B5"
                     maxLength={8}
                   />
-                  <Pressable
-                    onPress={handleClearNickname}
-                    className="w-6 h-6 md:w-8 md:h-8 items-center justify-center"
-                  >
-                    <Text className="text-text-100 text-[18px] md:text-[20px] font-sans">✕</Text>
-                  </Pressable>
+                  {nickname.length > 0 && (
+                    <Pressable
+                      onPress={handleClearNickname}
+                      className="w-6 h-6 items-center justify-center"
+                    >
+                      <ClearIcon width={24} height={24} />
+                    </Pressable>
+                  )}
                 </View>
 
-                <View className="h-[2px] bg-neutral-100 rounded-full mb-[6px]" />
+                <View className="h-[2px] bg-text-100 rounded-full mb-3" />
                 <Text className="text-text14 md:text-text15 text-text-300 text-right font-sans">
                   {nickname.length}/8자
                 </Text>
