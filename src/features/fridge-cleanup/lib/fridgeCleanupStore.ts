@@ -37,6 +37,13 @@ const setRemainingPercent = (id: number, percent: number) => {
   emit();
 };
 
+const removeItems = (ids: number[]) => {
+  state = {
+    items: state.items.filter((item) => !ids.includes(item.id)),
+  };
+  emit();
+};
+
 const reset = () => {
   state = { items: [] };
   emit();
@@ -45,6 +52,7 @@ const reset = () => {
 export const fridgeCleanupStore = {
   setSelectedItems,
   setRemainingPercent,
+  removeItems,
   reset,
   getItems: () => state.items,
 };
@@ -56,6 +64,7 @@ export const useFridgeCleanupStore = () => {
     items: snapshot.items,
     setSelectedItems,
     setRemainingPercent,
+    removeItems,
     reset,
   };
 };

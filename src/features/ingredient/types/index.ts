@@ -5,6 +5,7 @@ export interface FridgeItem {
   title: string;
   subtitle: string;
   status: FridgeItemStatus;
+  remainingQuantity: number;
   image?: string;
 }
 
@@ -64,6 +65,30 @@ export interface IngredientRegisterApiResponse {
     statusCode: string;
     purchasedOn: string;
     expiresOn: string;
+  };
+  error: null | {
+    code: string;
+    message: string;
+  };
+}
+
+export type IngredientStatusCode = 'consumed' | 'disposed';
+
+export interface IngredientStatusUpdateRequest {
+  status: IngredientStatusCode;
+  quantity: number;
+  wasteQuantity?: number;
+  wasteAmount?: number;
+}
+
+export interface IngredientStatusUpdateApiResponse {
+  success: boolean;
+  data: {
+    inventoryItemId: number;
+    statusCode: IngredientStatusCode;
+    remainingQuantity: number;
+    wasteQuantity?: number;
+    wasteAmount?: number;
   };
   error: null | {
     code: string;
