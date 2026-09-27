@@ -1,3 +1,4 @@
+import { useLogin } from "@/features/auth";
 import { Button } from "@/shared/ui/Button";
 import { InputBox } from "@/shared/ui/InputBox";
 import { router } from "expo-router";
@@ -8,10 +9,13 @@ import { SocialLoginButtons } from "./SocialLoginButtons";
 export const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { login, isLoading } = useLogin();
 
-  const handleLogin = () => {
-    // TODO: Implement login logic
-    router.push("/profile");
+  const handleLogin = async () => {
+    const user = await login(email, password);
+    if (!user) return;
+
+    router.replace("/main");
   };
 
   return (
@@ -63,7 +67,9 @@ export const LoginPage = () => {
           </Pressable>
         </View>
 
-        <Button onPress={handleLogin}>로그인</Button>
+        <Button onPress={handleLogin} disabled={isLoading}>
+          로그인
+        </Button>
       </View>
     </View>
   );
