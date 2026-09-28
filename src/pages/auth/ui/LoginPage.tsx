@@ -37,12 +37,21 @@ export const LoginPage = () => {
                   value={email}
                   onChangeText={setEmail}
                   placeholder="이메일 입력"
+                  keyboardType="email-address"
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  autoComplete="email"
+                  textContentType="emailAddress"
                 />
                 <InputBox
                   type="password"
                   value={password}
                   onChangeText={setPassword}
                   placeholder="비밀번호 입력"
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  autoComplete="password"
+                  textContentType="password"
                 />
               </View>
             </View>

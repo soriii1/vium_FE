@@ -5,6 +5,8 @@ import { tokenStorage } from '@/shared/lib/tokenStorage';
 import { login as loginApi } from '../api/authApi';
 import { AuthUser } from '../types';
 
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 export const useLogin = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -12,6 +14,11 @@ export const useLogin = () => {
   const login = async (email: string, password: string): Promise<AuthUser | null> => {
     if (!email.trim()) {
       Alert.alert('알림', '이메일을 입력해주세요.');
+      return null;
+    }
+
+    if (!EMAIL_REGEX.test(email.trim())) {
+      Alert.alert('알림', '올바른 이메일 형식이 아닙니다.');
       return null;
     }
 
@@ -36,9 +43,12 @@ export const useLogin = () => {
       return null;
     } catch (err) {
       console.error('Failed to login:', err);
-      const errorMessage = isAxiosError(err) && err.response
-        ? err.response.data?.error?.message || '이메일 또는 비밀번호를 확인해주세요.'
-        : '서버와 연결할 수 없습니다.';
+      // 400(INVALID_REQUEST)은 "email: ..." 형태의 필드 검증 메시지라 사용자용 문구로 대체
+      const errorMessage = !isAxiosError(err) || !err.response
+        ? '서버와 연결할 수 없습니다.'
+        : err.response.data?.error?.code === 'INVALID_REQUEST'
+          ? '이메일 또는 비밀번호 형식을 확인해주세요.'
+          : err.response.data?.error?.message || '이메일 또는 비밀번호를 확인해주세요.';
       Alert.alert('오류', errorMessage);
       setError(errorMessage);
       return null;
