@@ -21,3 +21,22 @@ export interface LoginApiResponse {
     message: string;
   };
 }
+
+export interface RegisterRequest {
+  email: string;
+  password: string;
+  displayName: string;
+}
+
+export interface RegisterApiResponse {
+  success: boolean;
+  data: {
+    userId: number;
+    email: string;
+    displayName: string;
+  } | null;
+  error: null | {
+    code: string;
+    message: string;
+  };
+}

@@ -1,12 +1,10 @@
 import { useState } from 'react';
 import { Alert } from 'react-native';
 import { isAxiosError } from 'axios';
-import { sessionUserStore } from '@/shared/lib/sessionUser';
-import { tokenStorage } from '@/shared/lib/tokenStorage';
 import { login as loginApi } from '../api/authApi';
 import { AuthUser } from '../types';
-
-const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+import { saveSession } from './saveSession';
+import { isValidEmail } from './validators';
 
 export const useLogin = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -18,7 +16,7 @@ export const useLogin = () => {
       return null;
     }
 
-    if (!EMAIL_REGEX.test(email.trim())) {
+    if (!isValidEmail(email)) {
       Alert.alert('알림', '올바른 이메일 형식이 아닙니다.');
       return null;
     }
@@ -34,8 +32,7 @@ export const useLogin = () => {
       const response = await loginApi({ email: email.trim(), password });
 
       if (response.success && response.data) {
-        await tokenStorage.setTokens(response.data.accessToken, response.data.refreshToken);
-        await sessionUserStore.set(response.data.user);
+        await saveSession(response.data);
         return response.data.user;
       }
 
