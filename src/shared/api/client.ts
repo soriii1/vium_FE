@@ -7,6 +7,8 @@ import { tokenStorage } from '@/shared/lib/tokenStorage';
 const API_BASE_URL = Constants.expoConfig?.extra?.apiBaseUrl || process.env.EXPO_PUBLIC_API_BASE_URL || 'http://localhost:8080';
 
 const REFRESH_PATH = '/api/auth/token/refresh';
+// 토큰 없이 호출하는 인증 API — 401이어도 재발급하지 않고 그대로 에러 전달 (예: 비밀번호 오류)
+const PUBLIC_AUTH_PATHS = ['/api/auth/login', '/api/auth/register', REFRESH_PATH];
 
 interface RefreshApiResponse {
   success: boolean;
@@ -63,9 +65,9 @@ apiClient.interceptors.response.use(
   (response) => response,
   async (error: AxiosError) => {
     const originalRequest = error.config as RetriableRequestConfig | undefined;
-    const isAuthRequest = originalRequest?.url?.startsWith('/api/auth/');
+    const isPublicAuthRequest = PUBLIC_AUTH_PATHS.includes(originalRequest?.url ?? '');
 
-    if (error.response?.status !== 401 || !originalRequest || originalRequest._retry || isAuthRequest) {
+    if (error.response?.status !== 401 || !originalRequest || originalRequest._retry || isPublicAuthRequest) {
       return Promise.reject(error);
     }
 

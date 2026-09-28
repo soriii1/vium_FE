@@ -26,8 +26,14 @@ const updateProfile = (changes: Partial<ProfileOverrides>) => {
   emit();
 };
 
+const reset = () => {
+  state = { nickname: null, profileImageUrl: null };
+  emit();
+};
+
 export const profileStore = {
   updateProfile,
+  reset,
   getState: () => state,
 };
 

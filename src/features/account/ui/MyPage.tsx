@@ -1,8 +1,9 @@
 import React from 'react';
-import { Pressable, ScrollView, Text, View } from 'react-native';
+import { Alert, Pressable, ScrollView, Text, View } from 'react-native';
 import { Image } from 'expo-image';
 import { useRouter } from 'expo-router';
 import ChevronIcon from '@/../assets/icons/chevron-left-icon.svg';
+import { profileStore } from '../lib/profileStore';
 import { useMyProfile } from '../lib/useMyProfile';
 import { MyPageMenuKey } from '../types';
 
@@ -13,7 +14,11 @@ const MENU_ITEMS: { key: MyPageMenuKey; label: string }[] = [
   { key: 'withdraw', label: '회원 탈퇴' },
 ];
 
-export const MyPage: React.FC = () => {
+interface MyPageProps {
+  onLogout?: () => Promise<void>;
+}
+
+export const MyPage: React.FC<MyPageProps> = ({ onLogout }) => {
   const router = useRouter();
   const { profile } = useMyProfile();
 
@@ -21,12 +26,31 @@ export const MyPage: React.FC = () => {
     router.push('/mypage/edit' as any);
   };
 
+  const handleLogout = () => {
+    Alert.alert('로그아웃', '로그아웃 하시겠어요?', [
+      { text: '취소', style: 'cancel' },
+      {
+        text: '로그아웃',
+        style: 'destructive',
+        onPress: async () => {
+          await onLogout?.();
+          // 다음 로그인 사용자에게 이전 프로필 수정 내용이 남지 않도록 초기화
+          profileStore.reset();
+        },
+      },
+    ]);
+  };
+
   const handleMenuPress = (key: MyPageMenuKey) => {
     if (key === 'settings') {
       router.push('/debug');
       return;
     }
-    // TODO: 나머지 메뉴 동작 연결 (로그아웃/문의/회원 탈퇴)
+    if (key === 'logout') {
+      handleLogout();
+      return;
+    }
+    // TODO: 나머지 메뉴 동작 연결 (문의/회원 탈퇴)
   };
 
   return (

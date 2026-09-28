@@ -22,6 +22,10 @@ export interface LoginApiResponse {
   };
 }
 
+export interface LogoutRequest {
+  refreshToken: string;
+}
+
 export interface RegisterRequest {
   email: string;
   password: string;

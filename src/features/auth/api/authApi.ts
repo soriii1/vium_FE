@@ -1,9 +1,19 @@
 import { apiClient } from '@/shared/api/client';
-import { LoginRequest, LoginApiResponse, RegisterRequest, RegisterApiResponse } from '../types';
+import {
+  LoginRequest,
+  LoginApiResponse,
+  LogoutRequest,
+  RegisterRequest,
+  RegisterApiResponse,
+} from '../types';
 
 export const login = async (request: LoginRequest): Promise<LoginApiResponse> => {
   const response = await apiClient.post<LoginApiResponse>('/api/auth/login', request);
   return response.data;
+};
+
+export const logout = async (request: LogoutRequest): Promise<void> => {
+  await apiClient.post('/api/auth/logout', request);
 };
 
 export const register = async (request: RegisterRequest): Promise<RegisterApiResponse> => {
