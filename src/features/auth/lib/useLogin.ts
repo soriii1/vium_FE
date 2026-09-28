@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Alert } from 'react-native';
 import { isAxiosError } from 'axios';
+import { sessionUserStore } from '@/shared/lib/sessionUser';
 import { tokenStorage } from '@/shared/lib/tokenStorage';
 import { login as loginApi } from '../api/authApi';
 import { AuthUser } from '../types';
@@ -34,6 +35,7 @@ export const useLogin = () => {
 
       if (response.success && response.data) {
         await tokenStorage.setTokens(response.data.accessToken, response.data.refreshToken);
+        await sessionUserStore.set(response.data.user);
         return response.data.user;
       }
 

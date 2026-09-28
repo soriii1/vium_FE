@@ -1,12 +1,15 @@
 import { useSyncExternalStore } from 'react';
-import { MyProfile } from '../types';
-import { MY_PROFILE_FIXTURE } from './profileFixtures';
+
+interface ProfileOverrides {
+  nickname: string | null;
+  profileImageUrl: string | null;
+}
 
 /**
- * 내 정보 API 연동 전까지 프로필 수정 내용을 앱 메모리에 보관합니다.
- * 앱을 다시 시작하면 임시 데이터로 초기화됩니다.
+ * 프로필 수정 API 연동 전까지 수정 내용을 앱 메모리에 보관합니다.
+ * 앱을 다시 시작하면 로그인 정보(sessionUser) 기준으로 초기화됩니다.
  */
-let state: MyProfile = MY_PROFILE_FIXTURE;
+let state: ProfileOverrides = { nickname: null, profileImageUrl: null };
 const listeners = new Set<() => void>();
 
 const emit = () => listeners.forEach((listener) => listener());
@@ -18,7 +21,7 @@ const subscribe = (listener: () => void) => {
 
 const getSnapshot = () => state;
 
-const updateProfile = (changes: Partial<MyProfile>) => {
+const updateProfile = (changes: Partial<ProfileOverrides>) => {
   state = { ...state, ...changes };
   emit();
 };

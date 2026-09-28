@@ -2,11 +2,12 @@ import { useState } from 'react';
 import { Alert } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { profileStore } from './profileStore';
+import { useMyProfile } from './useMyProfile';
 
 export const NICKNAME_MAX_LENGTH = 8;
 
 export const useProfileEdit = () => {
-  const initialProfile = profileStore.getState();
+  const { profile: initialProfile } = useMyProfile();
   const [nickname, setNickname] = useState(initialProfile.nickname);
   const [profileImageUrl, setProfileImageUrl] = useState(initialProfile.profileImageUrl);
 

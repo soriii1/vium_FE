@@ -1,6 +1,7 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
 import Constants from 'expo-constants';
 import { router } from 'expo-router';
+import { sessionUserStore } from '@/shared/lib/sessionUser';
 import { tokenStorage } from '@/shared/lib/tokenStorage';
 
 const API_BASE_URL = Constants.expoConfig?.extra?.apiBaseUrl || process.env.EXPO_PUBLIC_API_BASE_URL || 'http://localhost:8080';
@@ -76,6 +77,7 @@ apiClient.interceptors.response.use(
 
     if (!newAccessToken) {
       await tokenStorage.clearTokens();
+      await sessionUserStore.clear();
       router.replace('/login');
       return Promise.reject(error);
     }
