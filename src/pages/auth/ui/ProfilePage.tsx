@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, Pressable, TextInput, Alert } from 'react-native';
 import { Image } from 'expo-image';
+import { useRegister } from '@/features/auth';
 import { Button } from '@/shared/ui/Button';
 import { router } from 'expo-router';
 import * as ImagePicker from 'expo-image-picker';
@@ -10,10 +11,14 @@ import ClearIcon from '@/../assets/icons/clear-icon.svg';
 export const ProfilePage = () => {
   const [nickname, setNickname] = useState('');
   const [profileImageUri, setProfileImageUri] = useState<string | null>(null);
+  const { register, isLoading } = useRegister();
 
-  const handleNext = () => {
-    // TODO: Save profile data
-    router.push('/onboarding');
+  // TODO: 프로필 이미지는 백엔드 필드가 없어 아직 저장하지 않음
+  const handleNext = async () => {
+    const result = await register(nickname);
+    if (result === 'success') router.replace('/onboarding');
+    else if (result === 'needsCredentials') router.replace('/signUp');
+    else if (result === 'needsLogin') router.replace('/login');
   };
 
   const handleClearNickname = () => {
@@ -104,7 +109,7 @@ export const ProfilePage = () => {
           지금 정한 이름은 나중에 수정할 수 있어요
         </Text>
 
-        <Button onPress={handleNext}>
+        <Button onPress={handleNext} disabled={isLoading || nickname.trim().length === 0}>
           다음
         </Button>
       </View>

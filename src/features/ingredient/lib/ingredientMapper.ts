@@ -20,7 +20,7 @@ export const mapIngredientToFridgeItem = (ingredient: IngredientApiResponse): Fr
     : `소비기한 D-${daysLeft}`;
 
   const quantity = `${ingredient.remainingQuantity}${ingredient.unit}`;
-  const price = '3,000원';
+  const price = ingredient.amount != null ? `${ingredient.amount.toLocaleString('ko-KR')}원` : '-';
 
   return {
     id: ingredient.inventoryItemId,

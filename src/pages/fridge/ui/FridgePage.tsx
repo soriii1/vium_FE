@@ -9,6 +9,7 @@ import {
   FridgeGrid,
 } from '@/features/ingredient';
 import { useFridgeCleanup, FridgeCleanupModal } from '@/features/fridge-cleanup';
+import { useMyProfile } from '@/features/account';
 import { BottomNavigation } from '@/widgets';
 import { AddButton, Card } from '@/shared/ui';
 import BackIcon from '@/../assets/icons/back-icon.svg';
@@ -22,6 +23,8 @@ export const FridgePage = () => {
   const { items: fridgeItems, isLoading, error, refresh } = useIngredientsList();
   const { disposeItems, isDisposing } = useIngredientDispose();
   const { isCleanupModalVisible, openCleanupModal, closeCleanupModal } = useFridgeCleanup();
+  const { profile } = useMyProfile();
+  const fridgeTitle = profile.nickname ? `${profile.nickname}의 식재료` : '나의 식재료';
 
   const handleReceiptPress = () => {
     showIngredientUploadOptions((uri) => {
@@ -84,7 +87,7 @@ export const FridgePage = () => {
     return (
       <View className="flex-1 bg-white">
         <FridgeHeader
-          title="픽도화이팅의 식재료"
+          title={fridgeTitle}
           onBackPress={() => router.back()}
           onManagePress={() => setIsDeleteMode(true)}
         />
@@ -101,7 +104,7 @@ export const FridgePage = () => {
     return (
       <View className="flex-1 bg-white">
         <FridgeHeader
-          title="픽도화이팅의 식재료"
+          title={fridgeTitle}
           onBackPress={() => router.back()}
           onManagePress={() => setIsDeleteMode(true)}
         />
@@ -119,7 +122,7 @@ export const FridgePage = () => {
       {/* 일반 모드 또는 삭제 모드 헤더 */}
       {!isDeleteMode ? (
         <FridgeHeader
-          title="픽도화이팅의 식재료"
+          title={fridgeTitle}
           onBackPress={() => router.back()}
           onManagePress={() => setIsDeleteMode(true)}
         />

@@ -18,11 +18,12 @@ export interface FridgeItemDetail extends FridgeItem {
 
 export interface IngredientApiResponse {
   inventoryItemId: number;
-  ingredientCatalogId: number;
+  ingredientCatalogId: number | null;
   name: string;
-  categoryName: string;
+  categoryName: string | null;
   initialQuantity: number;
   remainingQuantity: number;
+  amount: number | null;
   unitId: number;
   unit: string;
   statusCode: string;
@@ -56,12 +57,12 @@ export interface IngredientRegisterApiResponse {
   success: boolean;
   data: {
     inventoryItemId: number;
-    ingredientCatalogId: number;
-    customName: string;
+    ingredientCatalogId: number | null;
+    customName: string | null;
     initialQuantity: number;
     remainingQuantity: number;
     unitId: number;
-    storageMethodId: number;
+    storageMethodId: number | null;
     statusCode: string;
     purchasedOn: string;
     expiresOn: string;

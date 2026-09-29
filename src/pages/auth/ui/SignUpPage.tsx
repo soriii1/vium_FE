@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, Pressable } from 'react-native';
+import { View, Text, Pressable, Alert } from 'react-native';
+import { useSignUpCredentials } from '@/features/auth';
 import { Button } from '@/shared/ui/Button';
 import { InputBox } from '@/shared/ui/InputBox';
 import { router } from 'expo-router';
@@ -9,15 +10,17 @@ export const SignUpPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
+  const { checkEmail, submit } = useSignUpCredentials();
 
   const handleSignUp = () => {
-    // TODO: Implement signup logic
+    if (!submit(email, password, passwordConfirm)) return;
     router.push('/profile');
   };
 
+  // TODO: 이메일 중복 확인 API가 생기면 연동 (현재는 가입 요청 시 서버에서 중복 여부 확인)
   const handleCheckDuplicate = () => {
-    // TODO: Implement duplicate check logic
-    console.log('Check duplicate for:', email);
+    if (!checkEmail(email)) return;
+    Alert.alert('알림', '이메일 중복 여부는 가입 완료 시 함께 확인돼요.');
   };
 
   return (
@@ -40,6 +43,11 @@ export const SignUpPage = () => {
                     value={email}
                     onChangeText={setEmail}
                     placeholder="이메일 입력"
+                    keyboardType="email-address"
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    autoComplete="email"
+                    textContentType="emailAddress"
                     style={{ flex: 1 }}
                   />
                   <Pressable
@@ -54,12 +62,20 @@ export const SignUpPage = () => {
                   value={password}
                   onChangeText={setPassword}
                   placeholder="비밀번호 입력"
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  autoComplete="new-password"
+                  textContentType="newPassword"
                 />
                 <InputBox
                   type="password"
                   value={passwordConfirm}
                   onChangeText={setPasswordConfirm}
                   placeholder="비밀번호 재입력"
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  autoComplete="new-password"
+                  textContentType="newPassword"
                 />
               </View>
             </View>
