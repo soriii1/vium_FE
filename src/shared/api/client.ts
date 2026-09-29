@@ -4,7 +4,8 @@ import { router } from 'expo-router';
 import { sessionUserStore } from '@/shared/lib/sessionUser';
 import { tokenStorage } from '@/shared/lib/tokenStorage';
 
-const API_BASE_URL = Constants.expoConfig?.extra?.apiBaseUrl || process.env.EXPO_PUBLIC_API_BASE_URL || 'http://localhost:8080';
+// .env(개인 환경, 예: 로컬 서버)가 app.json 기본값(배포 서버)보다 우선
+const API_BASE_URL = process.env.EXPO_PUBLIC_API_BASE_URL || Constants.expoConfig?.extra?.apiBaseUrl || 'http://localhost:8080';
 
 const REFRESH_PATH = '/api/auth/token/refresh';
 // 토큰 없이 호출하는 인증 API — 401이어도 재발급하지 않고 그대로 에러 전달 (예: 비밀번호 오류)

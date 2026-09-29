@@ -3,8 +3,7 @@ import { getItem, removeItem, setItem } from './secureStorage';
 
 /**
  * 로그인한 사용자 정보.
- * 내 정보 조회 API가 없어 로그인 응답의 user를 저장해 사용합니다.
- * TODO: GET /api/me 가 생기면 해당 API 응답으로 갱신
+ * 로그인 응답으로 저장하고, 화면 진입 시 GET /api/me 응답으로 갱신합니다.
  */
 export interface SessionUser {
   id: number;
