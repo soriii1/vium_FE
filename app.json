@@ -70,7 +70,7 @@
       "eas": {
         "projectId": "061074a9-2855-4362-9833-31427026dd41"
       },
-      "apiBaseUrl": "http://localhost:8080"
+      "apiBaseUrl": "https://api.vium.site"
     }
   }
 }
