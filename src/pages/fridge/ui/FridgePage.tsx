@@ -10,7 +10,6 @@ import {
 } from '@/features/ingredient';
 import { useFridgeCleanup, FridgeCleanupModal } from '@/features/fridge-cleanup';
 import { useMyProfile } from '@/features/account';
-import { BottomNavigation } from '@/widgets';
 import { AddButton, Card } from '@/shared/ui';
 import BackIcon from '@/../assets/icons/back-icon.svg';
 import TrashIcon from '@/../assets/icons/trash-icon.svg';
@@ -95,7 +94,6 @@ export const FridgePage = () => {
           <ActivityIndicator size="large" color="#00D1A7" />
           <Text className="mt-4 text-text14 text-text-200 font-sans">재료를 불러오는 중...</Text>
         </View>
-        <BottomNavigation />
       </View>
     );
   }
@@ -112,7 +110,6 @@ export const FridgePage = () => {
           <Text className="text-text16 text-text-100 font-semibold font-sans mb-2">오류 발생</Text>
           <Text className="text-text14 text-text-200 font-sans text-center">{error}</Text>
         </View>
-        <BottomNavigation />
       </View>
     );
   }
@@ -212,7 +209,6 @@ export const FridgePage = () => {
         />
       )}
 
-      <BottomNavigation />
 
       <FridgeCleanupModal
         visible={isCleanupModalVisible}

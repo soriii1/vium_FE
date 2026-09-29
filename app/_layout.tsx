@@ -1,18 +1,38 @@
 import '../global.css';
 import { Stack } from 'expo-router';
 import { AppProvider } from '@/providers/AppProvider';
+import { useIsSessionReady, useSessionUser } from '@/shared/lib/sessionUser';
 
-// 네브바 탭 화면은 스택 전환 대신 페이드로 전환 (추후 Tabs 레이아웃으로 마이그레이션 예정)
-const TAB_SCREENS = ['main', 'fridge', 'recipe', 'mypage', 'debug'];
+const RootNavigator = () => {
+  const user = useSessionUser();
+  const isSessionReady = useIsSessionReady();
+
+  // 저장된 로그인 정보를 읽기 전에는 화면을 그리지 않음 (로그인 화면이 잠깐 보이는 것 방지)
+  if (!isSessionReady) return null;
+
+  const isLoggedIn = user !== null;
+
+  return (
+    <Stack screenOptions={{ headerShown: false }}>
+      <Stack.Protected guard={isLoggedIn}>
+        <Stack.Screen name="(tabs)" options={{ animation: 'none' }} />
+        <Stack.Screen name="onboarding" />
+      </Stack.Protected>
+
+      <Stack.Protected guard={!isLoggedIn}>
+        <Stack.Screen name="(auth)" options={{ animation: 'none' }} />
+      </Stack.Protected>
+
+      <Stack.Screen name="index" />
+      <Stack.Screen name="debug" />
+    </Stack>
+  );
+};
 
 export default function RootLayout() {
   return (
     <AppProvider>
-      <Stack screenOptions={{ headerShown: false }}>
-        {TAB_SCREENS.map((name) => (
-          <Stack.Screen key={name} name={name} options={{ animation: 'none' }} />
-        ))}
-      </Stack>
+      <RootNavigator />
     </AppProvider>
   );
 }

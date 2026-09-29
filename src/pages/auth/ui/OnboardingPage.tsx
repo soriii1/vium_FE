@@ -15,7 +15,8 @@ export const OnboardingPage = () => {
 
   const handleStart = () => {
     // TODO: Save onboarding data
-    router.push('/main');
+    // 온보딩으로 뒤로 가지 않도록 replace
+    router.replace('/main');
   };
 
   return (

@@ -3,7 +3,6 @@ import { View, Text, ScrollView, TouchableOpacity, ActivityIndicator } from 'rea
 import { Image } from 'expo-image';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { StatusBadge, DetailInfoRow } from '@/shared/ui';
-import { BottomNavigation } from '@/widgets';
 import { useIngredientDetail } from '@/features/ingredient';
 import BackIcon from '@/../assets/icons/back-icon.svg';
 
@@ -99,7 +98,6 @@ export const FridgeDetailPage = () => {
       </ScrollView>
 
       {/* Bottom Navigation */}
-      <BottomNavigation />
     </View>
   );
 };
