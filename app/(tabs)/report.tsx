@@ -1,4 +1,4 @@
-import { ReportPage } from '@/pages/report';
+import { ReportPage } from '@/features/report';
 
 export default function Report() {
   return <ReportPage />;

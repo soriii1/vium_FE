@@ -1,6 +1,6 @@
 # Vium App
 
-Expo Router와 FSD 아키텍처를 기반으로 한 React Native 애플리케이션입니다.
+Expo Router와 Feature-Based 아키텍처를 기반으로 한 React Native 애플리케이션입니다.
 
 ---
 
@@ -74,7 +74,7 @@ npm start
 ### 2. 파일 및 폴더 이름
 * **컴포넌트 파일**: `PascalCase` 사용 (예: `UserProfile.tsx`, `Header.tsx`)
 * **일반 폴더 / 유틸 / Hook 파일**: `camelCase` 사용 (예: `useAuth.ts`, `formatDate.ts`)
-* **FSD Layer / Slice 폴더**: `kebab-case` 또는 `camelCase` 사용 (예: `user-profile/`, `auth/`)
+* **기능(feature) 폴더**: `kebab-case` 또는 `camelCase` 사용 (예: `user-profile/`, `auth/`)
 
 ### 3. 코드 네이밍
 * **컴포넌트 이름**: `PascalCase` (예: `function UserProfile()`)

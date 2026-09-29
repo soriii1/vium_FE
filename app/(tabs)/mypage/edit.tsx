@@ -1,4 +1,4 @@
-import { ProfileEditPage } from '@/pages/mypage';
+import { ProfileEditPage } from '@/features/account';
 
 export default function ProfileEdit() {
   return <ProfileEditPage />;

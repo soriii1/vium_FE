@@ -1,4 +1,4 @@
-import { FridgePage } from '@/pages/fridge';
+import { FridgePage } from '@/features/fridge';
 
 export default function Fridge() {
   return <FridgePage />;

@@ -5,6 +5,7 @@ export { Banner } from './Banner';
 export { InputBox } from './InputBox';
 export { AddButton } from './AddButton';
 export { NavBar } from './NavBar';
+export { BottomNavigation } from './BottomNavigation';
 export { Card } from './Card';
 export { StatusBadge } from './StatusBadge';
 export { DetailInfoRow } from './DetailInfoRow';

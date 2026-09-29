@@ -1,4 +1,6 @@
-export { MyPage } from './ui/MyPage';
-export { ProfileEditPage } from './ui/ProfileEditPage';
+// screens
+export { MyPage } from './screens/MyPage';
+export { ProfileEditPage } from './screens/ProfileEditPage';
+
+// 다른 기능에서 사용
 export { useMyProfile } from './lib/useMyProfile';
-export type { MyProfile, MyPageMenuKey } from './types';

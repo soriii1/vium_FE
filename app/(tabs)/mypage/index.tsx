@@ -1,4 +1,4 @@
-import { MyPage } from '@/pages/mypage';
+import { MyPage } from '@/features/account';
 
 export default function MyPageRoute() {
   return <MyPage />;

@@ -1,4 +1,4 @@
-import { RecipeWastePage } from '@/pages/recipe';
+import { RecipeWastePage } from '@/features/recipe';
 
 export default function RecipeWaste() {
   return <RecipeWastePage />;

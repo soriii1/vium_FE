@@ -1,4 +1,4 @@
-import { RecipeAddIngredientPage } from '@/pages/recipe';
+import { RecipeAddIngredientPage } from '@/features/recipe';
 
 export default function RecipeAddIngredient() {
   return <RecipeAddIngredientPage />;

@@ -1,4 +1,4 @@
-import { FridgeAddPage } from '@/pages/fridge';
+import { FridgeAddPage } from '@/features/fridge';
 
 export default function FridgeAdd() {
   return <FridgeAddPage />;

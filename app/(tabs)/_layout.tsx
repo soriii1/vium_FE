@@ -1,5 +1,5 @@
 import { Tabs } from 'expo-router';
-import { BottomNavigation } from '@/widgets';
+import { BottomNavigation } from '@/shared/ui';
 
 export default function TabsLayout() {
   return (
