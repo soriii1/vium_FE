@@ -7,6 +7,7 @@ export interface IngredientFormData {
   name: string;
   amount: string;
   unitId: number;
+  storageMethodId: number;
   price: string;
   registeredDate: string;
   expiryDate: string;
@@ -46,6 +47,7 @@ export const useIngredientRegister = () => {
         customName: formData.name,
         quantity: parseFloat(formData.amount) || 1,
         unitId: formData.unitId,
+        storageMethodId: formData.storageMethodId,
         purchasedOn: formData.registeredDate ? formatDateToISO(formData.registeredDate) : undefined,
         expiresOn: formatDateToISO(formData.expiryDate),
         amount: formData.price ? parseInt(formData.price.replace(/,/g, ''), 10) : undefined,

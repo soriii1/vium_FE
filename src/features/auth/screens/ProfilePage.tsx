@@ -7,6 +7,7 @@ import { router } from 'expo-router';
 import * as ImagePicker from 'expo-image-picker';
 import CameraIcon from '@/../assets/icons/camera-icon.svg';
 import ClearIcon from '@/../assets/icons/clear-icon.svg';
+import { AppHeader } from '@/shared/ui';
 
 export const ProfilePage = () => {
   const [nickname, setNickname] = useState('');
@@ -46,7 +47,11 @@ export const ProfilePage = () => {
 
   return (
     <View className="flex-1 bg-white">
-      <View className="flex-1 px-5 md:px-10 lg:px-20 pt-[164px] items-center">
+      <View className="flex-1 px-screen md:px-10 lg:px-20 pt-[164px] items-center">
+        {/* 상단 여백 안에 배치해 기존 레이아웃은 그대로 */}
+        <View className="absolute top-0 left-0 right-0">
+          <AppHeader />
+        </View>
         <View className="w-full max-w-[480px]">
           <Text className="text-title md:text-[28px] lg:text-[32px] font-medium text-text-100 mb-[54px] font-sans text-left">
             환영합니다,{'\n'}어떤 이름으로 불러드릴까요?

@@ -3,6 +3,7 @@ import { View, Text, ScrollView, Pressable, ActivityIndicator } from 'react-nati
 import { useRouter } from 'expo-router';
 import { useIngredientsList } from '../lib/useIngredientsList';
 import { fridgeCleanupStore } from '../lib/fridgeCleanupStore';
+import { AppHeader } from '@/shared/ui';
 
 export const FridgeCleanupSelectPage: React.FC = () => {
   const router = useRouter();
@@ -30,15 +31,9 @@ export const FridgeCleanupSelectPage: React.FC = () => {
   return (
     <View className="flex-1 bg-white">
       <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
-        <View className="px-5 md:px-10 lg:px-20 pt-[74px]">
-          <View className="bg-neutral-50 h-[28px] w-[79px] items-center justify-center">
-            <Text className="text-text14 text-neutral-300 font-medium font-sans">
-              Logo
-            </Text>
-          </View>
-        </View>
+        <AppHeader />
 
-        <View className="flex-1 px-5 md:px-10 lg:px-20 pt-[64px] items-center">
+        <View className="flex-1 px-screen md:px-10 lg:px-20 pt-[64px] items-center">
           <View className="w-full max-w-[480px] gap-12">
             <Text className="text-title md:text-[28px] lg:text-[32px] font-medium text-text-100 font-sans">
               다 먹었거나 폐기할{'\n'}재료를 선택해 주세요

@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { View, Text, ScrollView, Pressable, Alert, TextInput, ActivityIndicator } from 'react-native';
 import { useRouter } from 'expo-router';
-import { ImageUpload, LabelInput, LabelInputWithUnit, DatePicker, Button } from '@/shared/ui';
+import { ImageUpload, LabelInput, LabelInputWithUnit, DatePicker, Button, AppHeader } from '@/shared/ui';
 import { useIngredientRegister } from '../lib/useIngredientRegister';
+import { StorageMethodSelect, STORAGE_METHOD_OPTIONS } from '../ui/StorageMethodSelect';
 import * as ImagePicker from 'expo-image-picker';
 import BackIcon from '@/../assets/icons/back-icon.svg';
 
@@ -14,6 +15,7 @@ export const FridgeAddPage: React.FC = () => {
   const [amount, setAmount] = useState('');
   const [unitId, setUnitId] = useState(0);
   const [unitLabel, setUnitLabel] = useState('');
+  const [storageMethodId, setStorageMethodId] = useState<number>(STORAGE_METHOD_OPTIONS[0].id);
   const [price, setPrice] = useState('');
   const [registeredDate, setRegisteredDate] = useState(new Date());
   const [expiryDate, setExpiryDate] = useState(new Date());
@@ -54,6 +56,7 @@ export const FridgeAddPage: React.FC = () => {
       name,
       amount,
       unitId,
+      storageMethodId,
       price,
       registeredDate: formatDateToString(registeredDate),
       expiryDate: formatDateToString(expiryDate),
@@ -67,16 +70,14 @@ export const FridgeAddPage: React.FC = () => {
 
   return (
     <View className="flex-1 bg-white">
-      <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
-        <View className="pt-20 px-7 gap-3">
-          <View className="bg-neutral-50 h-[28px] w-[79px] items-center justify-center">
-            <Text className="text-text14 text-neutral-300 font-medium font-sans">
-              Logo
-            </Text>
-          </View>
-        </View>
+      <ScrollView
+        className="flex-1"
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: 32 }}
+      >
+        <AppHeader />
 
-        <View className="px-7 gap-10 pt-10">
+        <View className="px-screen gap-10 pt-10">
           <Pressable onPress={() => router.back()}>
             <BackIcon width={30} height={30} />
           </Pressable>
@@ -111,6 +112,7 @@ export const FridgeAddPage: React.FC = () => {
                 placeholder="입력하세요"
                 keyboardType="numeric"
               />
+              <StorageMethodSelect label="보관방법" value={storageMethodId} onChange={setStorageMethodId} />
               <DatePicker
                 label="등록일자"
                 value={registeredDate}
@@ -126,21 +128,22 @@ export const FridgeAddPage: React.FC = () => {
         </View>
       </ScrollView>
 
-      <View className="px-12 pb-[100px] items-center">
-        {isLoading ? (
-          <View className="bg-neutral-500 h-[68px] w-[299px] rounded-3xl items-center justify-center">
+      {/* 다른 화면(레시피·냉장고 정리)과 같은 위치에 버튼 고정 */}
+      <View className="px-12 pt-4 pb-[100px] items-center">
+        {/* 등록 중에도 버튼 크기가 바뀌지 않도록 높이 고정, 내용만 교체 */}
+        <Pressable
+          className={`bg-neutral-500 rounded-3xl items-center justify-center px-2.5 h-[54px] w-[299px] ${isLoading ? 'opacity-70' : ''}`}
+          onPress={handleRegister}
+          disabled={isLoading}
+        >
+          {isLoading ? (
             <ActivityIndicator color="#fff" />
-          </View>
-        ) : (
-          <Pressable
-            className="bg-neutral-500 rounded-3xl items-center justify-center px-2.5 py-[15px] w-[299px]"
-            onPress={handleRegister}
-          >
+          ) : (
             <Text className="text-text-400 text-subtitle text-center font-sans">
               등록하기
             </Text>
-          </Pressable>
-        )}
+          )}
+        </Pressable>
       </View>
     </View>
   );

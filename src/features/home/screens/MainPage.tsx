@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, ScrollView, Pressable } from 'react-native';
 import { useRouter } from 'expo-router';
-import { Banner } from '@/shared/ui';
+import { Banner, AppHeader } from '@/shared/ui';
 import { useFridgeCleanup, FridgeCleanupModal } from '@/features/fridge';
 import ReportIcon from '@/../assets/icons/report-icon.svg';
 import CartIcon from '@/../assets/icons/cart-icon.svg';
@@ -36,18 +36,17 @@ export const MainPage = () => {
   return (
     <View className="flex-1 bg-white">
       <ScrollView className="flex-1" contentContainerStyle={{ paddingBottom: 140 }}>
-        {/* Header */}
-        <View className="px-7 pt-[74px] pb-9 flex-row items-center justify-between max-w-[1200px] w-full mx-auto">
-          <View className="bg-neutral-50 h-7 w-[79px] items-center justify-center">
-            <Text className="text-text14 text-neutral-300 font-medium font-sans">Logo</Text>
-          </View>
-          {/* TODO: 알림 페이지 연결 */}
-          <Pressable className="w-[35px] h-[35px]">
-            <BellIcon width={35} height={35} />
-          </Pressable>
-        </View>
+        <AppHeader
+          style={{ marginBottom: 36 }}
+          right={
+            // TODO: 알림 페이지 연결
+            <Pressable className="w-[35px] h-[35px]">
+              <BellIcon width={35} height={35} />
+            </Pressable>
+          }
+        />
 
-        <View className="px-5 md:px-10 lg:px-20 max-w-[1200px] w-full mx-auto gap-[50px]">
+        <View className="px-screen md:px-10 lg:px-20 max-w-[1200px] w-full mx-auto gap-[50px]">
           <View className="items-center gap-[53px]">
             <Banner onPress={handleBannerPress} />
 

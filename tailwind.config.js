@@ -8,6 +8,10 @@ module.exports = {
   presets: [require("nativewind/preset")],
   theme: {
     extend: {
+      spacing: {
+        // 화면 좌우 그리드 마진 — 전 화면 공통 (px-screen)
+        screen: '24px',
+      },
       fontFamily: {
         sans: ['Paperlogy', 'system-ui', 'sans-serif'],
       },

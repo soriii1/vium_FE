@@ -5,6 +5,7 @@ import { router } from "expo-router";
 import React, { useState } from "react";
 import { Pressable, Text, View } from "react-native";
 import { SocialLoginButtons } from "../ui/SocialLoginButtons";
+import { AppHeader } from '@/shared/ui';
 
 export const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -20,7 +21,11 @@ export const LoginPage = () => {
 
   return (
     <View className="flex-1 bg-white">
-      <View className="flex-1 px-5 md:px-10 lg:px-20 pt-[161px] items-center">
+      <View className="flex-1 px-screen md:px-10 lg:px-20 pt-[161px] items-center">
+        {/* 상단 여백 안에 배치해 기존 레이아웃은 그대로 */}
+        <View className="absolute top-0 left-0 right-0">
+          <AppHeader />
+        </View>
         <View className="w-full max-w-[480px]">
           <View className="mb-[89px]">
             <Text className="text-title md:text-[28px] lg:text-[32px] font-medium text-text-100 mb-[74px] font-sans">
