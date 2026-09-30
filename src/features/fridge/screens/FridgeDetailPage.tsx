@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, ScrollView, TouchableOpacity, ActivityIndicator, Pressable } from 'react-native';
 import { Image } from 'expo-image';
 import { useRouter, useLocalSearchParams } from 'expo-router';
-import { StatusBadge, DetailInfoRow, Logo } from '@/shared/ui';
+import { StatusBadge, DetailInfoRow, AppHeader } from '@/shared/ui';
 import { useIngredientDetail } from '../lib/useIngredientDetail';
 import BackIcon from '@/../assets/icons/back-icon.svg';
 import EditIcon from '@/../assets/icons/edit-icon.svg';
@@ -40,18 +40,10 @@ export const FridgeDetailPage = () => {
   return (
     <View className="flex-1 bg-white">
       <ScrollView className="flex-1">
-        {/* Header */}
-        <View className="h-[102px] bg-white">
-          {/* Status Bar Spacer */}
-          <View className="h-[62px]" />
-
-          <View className="px-7 h-7 justify-center">
-            <Logo />
-          </View>
-        </View>
+        <AppHeader />
 
         {/* Content */}
-        <View className="px-7 pt-8">
+        <View className="px-screen pt-8">
           {/* Back Button */}
           <TouchableOpacity
             onPress={() => router.back()}

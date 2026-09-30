@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, ScrollView, Pressable, Alert, TextInput, ActivityIndicator } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { ImageUpload, LabelInput, LabelInputWithUnit, DatePicker, Button, Logo } from '@/shared/ui';
+import { ImageUpload, LabelInput, LabelInputWithUnit, DatePicker, Button, AppHeader } from '@/shared/ui';
 import { useIngredientRegister } from '../lib/useIngredientRegister';
 import { StorageMethodSelect, STORAGE_METHOD_OPTIONS } from '../ui/StorageMethodSelect';
 import * as ImagePicker from 'expo-image-picker';
@@ -77,11 +77,9 @@ export const FridgeAddPage: React.FC = () => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 32 }}
       >
-        <View className="pt-20 px-7 gap-3">
-          <Logo />
-        </View>
+        <AppHeader />
 
-        <View className="px-7 gap-10 pt-10">
+        <View className="px-screen gap-10 pt-10">
           <Pressable onPress={() => router.back()}>
             <BackIcon width={30} height={30} />
           </Pressable>

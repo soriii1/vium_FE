@@ -6,7 +6,7 @@ import { RecipeCategory } from '../types';
 import { useRecipesList } from '../lib/useRecipesList';
 import { RecipeCategoryFilter } from '../ui/RecipeCategoryFilter';
 import { RecipeListCard } from '../ui/RecipeListCard';
-import { Logo } from '@/shared/ui';
+import { AppHeader } from '@/shared/ui';
 
 export const RecipePage: React.FC = () => {
   const router = useRouter();
@@ -15,11 +15,9 @@ export const RecipePage: React.FC = () => {
 
   return (
     <ScrollView className="flex-1 bg-white" contentContainerStyle={{ paddingBottom: 140 }}>
-      <View className="px-5 md:px-10 lg:px-20 pt-[74px]">
-        <Logo />
-      </View>
+      <AppHeader />
 
-      <View className="px-5 md:px-10 lg:px-20 pt-[26px] gap-[26px]">
+      <View className="px-screen md:px-10 lg:px-20 pt-[26px] gap-[26px]">
         <Pressable
           onPress={() => (router.canGoBack() ? router.back() : router.replace('/main'))}
           className="flex-row items-center gap-4 self-start"
@@ -31,7 +29,7 @@ export const RecipePage: React.FC = () => {
         <RecipeCategoryFilter selected={category} onSelect={setCategory} />
       </View>
 
-      <View className="px-5 md:px-10 lg:px-20 pt-[52px]">
+      <View className="px-screen md:px-10 lg:px-20 pt-[52px]">
         {isLoading ? (
           <View className="items-center py-10">
             <ActivityIndicator size="large" color="#A2CD87" />

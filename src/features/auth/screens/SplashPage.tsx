@@ -7,7 +7,7 @@ import { Logo } from '@/shared/ui';
 export const SplashPage = () => {
   return (
     <View className="flex-1 bg-white">
-      <View className="flex-1 items-center justify-center px-5 md:px-10 lg:px-20">
+      <View className="flex-1 items-center justify-center px-screen md:px-10 lg:px-20">
         <View className="items-center">
           <Logo width={200} />
           <Text className="text-subtitle md:text-[24px] lg:text-[28px] font-medium text-text-100 text-center mt-4 font-sans">

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, Pressable } from 'react-native';
 import { Button } from '@/shared/ui/Button';
 import { router } from 'expo-router';
-import { Logo } from '@/shared/ui';
+import { AppHeader } from '@/shared/ui';
 
 const SHOPPING_FREQUENCY_OPTIONS = [
   '3일에 한 번',
@@ -22,10 +22,10 @@ export const OnboardingPage = () => {
 
   return (
     <View className="flex-1 bg-white">
-      <View className="flex-1 px-5 md:px-10 lg:px-20 pt-[166px] items-center">
+      <View className="flex-1 px-screen md:px-10 lg:px-20 pt-[166px] items-center">
         {/* 상단 여백 안에 배치해 기존 레이아웃은 그대로 */}
-        <View className="absolute top-[74px] left-5 md:left-10 lg:left-20">
-          <Logo />
+        <View className="absolute top-0 left-0 right-0">
+          <AppHeader />
         </View>
         <View className="w-full max-w-[480px]">
           <View>

@@ -22,7 +22,7 @@ export const FridgeGrid: React.FC<FridgeGridProps> = ({
   onItemPress,
 }) => {
   return (
-    <ScrollView className="flex-1 px-4 md:px-8 lg:px-16" contentContainerStyle={{ paddingBottom: 100 }}>
+    <ScrollView className="flex-1 px-screen md:px-8 lg:px-16" contentContainerStyle={{ paddingBottom: 100 }}>
       <View className="flex-row flex-wrap -mx-2 max-w-[1200px] mx-auto w-full">
         {/* Empty Card */}
         <View className="mb-4 px-2 w-1/3 md:w-1/4 lg:w-1/5">

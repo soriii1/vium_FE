@@ -2,7 +2,7 @@ import React from 'react';
 import { KeyboardAvoidingView, Platform, Pressable, ScrollView, Text, TextInput, View } from 'react-native';
 import { Image } from 'expo-image';
 import { useRouter } from 'expo-router';
-import { Button, Logo } from '@/shared/ui';
+import { Button, AppHeader } from '@/shared/ui';
 import BackIcon from '@/../assets/icons/back-icon.svg';
 import PhotoIcon from '@/../assets/icons/photo-icon.svg';
 import { NICKNAME_MAX_LENGTH, useProfileEdit } from '../lib/useProfileEdit';
@@ -34,15 +34,15 @@ export const ProfileEditPage: React.FC = () => {
         contentContainerStyle={{ flexGrow: 1 }}
         keyboardShouldPersistTaps="handled"
       >
-        <View className="px-5 md:px-10 lg:px-20 pt-[74px] gap-10">
-          <Logo />
+        <AppHeader />
+        <View className="px-screen md:px-10 lg:px-20 pt-10">
           <Pressable onPress={() => router.back()} className="flex-row items-center gap-4 self-start">
             <BackIcon width={30} height={30} color="#000000" />
             <Text className="text-title font-medium font-sans text-black">프로필 수정</Text>
           </Pressable>
         </View>
 
-        <View className="flex-1 items-center px-5 pt-[55px]">
+        <View className="flex-1 items-center px-screen pt-[55px]">
           <View className="w-full max-w-[271px] items-center gap-[42px]">
             {/* 프로필 이미지 */}
             <View className="w-[117px] h-[117px]">
@@ -93,7 +93,7 @@ export const ProfileEditPage: React.FC = () => {
           </View>
         </View>
 
-        <View className="w-full items-center pt-10 pb-[60px] px-5">
+        <View className="w-full items-center pt-10 pb-[60px] px-screen">
           <Button onPress={handleSave} disabled={!canSave}>
             저장
           </Button>

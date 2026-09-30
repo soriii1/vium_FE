@@ -86,7 +86,7 @@ export const Banner: React.FC<BannerProps> = ({ variant = 'tomato', onPress, sty
   };
 
   return (
-    <View className="w-[361px]" style={style}>
+    <View className="w-full" style={style}>
       <View className="h-[162px] rounded-lg overflow-hidden" onLayout={handleLayout}>
         <ScrollView
           ref={scrollRef}
@@ -99,7 +99,7 @@ export const Banner: React.FC<BannerProps> = ({ variant = 'tomato', onPress, sty
             <Pressable
               key={slide.variant}
               style={{ width }}
-              className="bg-primary-400 px-5 py-2.5 flex-row items-center justify-between h-[162px]"
+              className="bg-primary-300 px-5 py-2.5 flex-row items-center justify-between h-[162px]"
               onPress={() => onPress?.(slide.variant)}
             >
               <View className="flex-1 justify-between h-full py-2">

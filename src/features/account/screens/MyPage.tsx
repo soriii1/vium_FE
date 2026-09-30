@@ -7,7 +7,7 @@ import { useLogout } from '@/features/auth';
 import { profileStore } from '../lib/profileStore';
 import { useMyProfile } from '../lib/useMyProfile';
 import { MyPageMenuKey } from '../types';
-import { Logo } from '@/shared/ui';
+import { AppHeader } from '@/shared/ui';
 
 const MENU_ITEMS: { key: MyPageMenuKey; label: string }[] = [
   { key: 'logout', label: '로그아웃' },
@@ -56,11 +56,9 @@ export const MyPage: React.FC = () => {
 
   return (
     <ScrollView className="flex-1 bg-white" contentContainerStyle={{ paddingBottom: 140 }}>
-      <View className="px-5 md:px-10 lg:px-20 pt-[74px]">
-        <Logo />
-      </View>
+      <AppHeader />
 
-      <View className="items-center px-5 pt-[55px]">
+      <View className="items-center px-screen pt-[55px]">
         <View className="w-full max-w-[271px] items-center gap-[78px]">
           {/* 프로필 */}
           <View className="w-full max-w-[256px] items-center gap-[26px]">

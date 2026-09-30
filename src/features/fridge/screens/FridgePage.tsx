@@ -9,7 +9,7 @@ import { FridgeHeader } from '../ui/FridgeHeader';
 import { FridgeGrid } from '../ui/FridgeGrid';
 import { FridgeCleanupModal } from '../ui/FridgeCleanupModal';
 import { useMyProfile } from '@/features/account';
-import { AddButton, Card, Logo } from '@/shared/ui';
+import { AddButton, Card, AppHeader } from '@/shared/ui';
 import BackIcon from '@/../assets/icons/back-icon.svg';
 import TrashIcon from '@/../assets/icons/trash-icon.svg';
 
@@ -105,7 +105,7 @@ export const FridgePage = () => {
           onBackPress={() => router.back()}
           onManagePress={() => setIsDeleteMode(true)}
         />
-        <View className="flex-1 items-center justify-center px-4">
+        <View className="flex-1 items-center justify-center px-screen">
           <Text className="text-text16 text-text-100 font-semibold font-sans mb-2">오류 발생</Text>
           <Text className="text-text14 text-text-200 font-sans text-center">{error}</Text>
         </View>
@@ -123,29 +123,31 @@ export const FridgePage = () => {
           onManagePress={() => setIsDeleteMode(true)}
         />
       ) : (
-        <View className="px-4 md:px-8 lg:px-16 pt-[74px] pb-4 max-w-[1200px] mx-auto w-full">
-          <Logo style={{ marginBottom: 16 }} />
-          <View className="flex-row items-center mb-[27px]">
-            <Pressable onPress={handleCancelDelete} className="mr-4 md:mr-6">
-              <BackIcon width={24} height={24} color="#333333" />
-            </Pressable>
-            <Text className="text-text-100 text-title md:text-[28px] lg:text-[32px] font-medium font-sans">
-              식재료 관리하기
-            </Text>
-          </View>
+        <View>
+          <AppHeader />
+          <View className="px-screen md:px-8 lg:px-16 pt-4 pb-4 max-w-[1200px] mx-auto w-full">
+            <View className="flex-row items-center mb-[27px]">
+              <Pressable onPress={handleCancelDelete} className="mr-4 md:mr-6">
+                <BackIcon width={24} height={24} color="#333333" />
+              </Pressable>
+              <Text className="text-text-100 text-title md:text-[28px] lg:text-[32px] font-medium font-sans">
+                식재료 관리하기
+              </Text>
+            </View>
 
-          <View className="flex-row pl-[10px] gap-[190px]">
-            <Text className="text-neutral-700 text-text14 font-sans">
-              {selectedItems.size}개의 식재료가 선택됨
-            </Text>
-            <Pressable
-              onPress={handleDelete}
-              disabled={isDisposing}
-              hitSlop={8}
-              className={`ml-3 ${isDisposing ? 'opacity-50' : ''}`}
-            >
-              <TrashIcon width={24} height={24} />
-            </Pressable>
+            <View className="flex-row pl-[10px] gap-[190px]">
+              <Text className="text-neutral-700 text-text14 font-sans">
+                {selectedItems.size}개의 식재료가 선택됨
+              </Text>
+              <Pressable
+                onPress={handleDelete}
+                disabled={isDisposing}
+                hitSlop={8}
+                className={`ml-3 ${isDisposing ? 'opacity-50' : ''}`}
+              >
+                <TrashIcon width={24} height={24} />
+              </Pressable>
+            </View>
           </View>
         </View>
       )}
@@ -159,7 +161,7 @@ export const FridgePage = () => {
         />
       ) : (
         <ScrollView
-          className="flex-1 px-4 md:px-8 lg:px-16"
+          className="flex-1 px-screen md:px-8 lg:px-16"
           contentContainerStyle={{ paddingBottom: 100 }}
         >
           <View className="flex-row flex-wrap -mx-2 max-w-[1200px] mx-auto w-full">

@@ -3,7 +3,7 @@ import { Pressable, ScrollView, Text, View } from 'react-native';
 import Slider from '@react-native-community/slider';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useRecipeCookStore } from '../lib/recipeCookStore';
-import { Logo } from '@/shared/ui';
+import { AppHeader } from '@/shared/ui';
 
 export const RecipeWastePage: React.FC = () => {
   const router = useRouter();
@@ -33,11 +33,9 @@ export const RecipeWastePage: React.FC = () => {
   return (
     <View className="flex-1">
       <ScrollView className="flex-1" contentContainerStyle={{ paddingBottom: 140 }}>
-        <View className="px-5 md:px-10 lg:px-20 pt-[74px]">
-          <Logo />
-        </View>
+        <AppHeader />
 
-        <View className="px-5 md:px-10 lg:px-20 pt-[49px] items-center">
+        <View className="px-screen md:px-10 lg:px-20 pt-[49px] items-center">
           <View className="w-full max-w-[480px] gap-[72px]">
             <View className="gap-12">
               <Text className="text-title font-medium font-sans text-neutral-600">

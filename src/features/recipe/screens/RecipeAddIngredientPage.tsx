@@ -2,7 +2,7 @@ import React from 'react';
 import { Pressable, ScrollView, Text, View } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useRecipeIngredientAdd } from '../lib/useRecipeIngredientAdd';
-import { Logo } from '@/shared/ui';
+import { AppHeader } from '@/shared/ui';
 
 export const RecipeAddIngredientPage: React.FC = () => {
   const router = useRouter();
@@ -22,11 +22,9 @@ export const RecipeAddIngredientPage: React.FC = () => {
   return (
     <View className="flex-1 bg-white">
       <ScrollView className="flex-1" contentContainerStyle={{ paddingBottom: 60 }}>
-        <View className="px-5 md:px-10 lg:px-20 pt-[74px]">
-          <Logo />
-        </View>
+        <AppHeader />
 
-        <View className="px-5 md:px-10 lg:px-20 pt-[66px] items-center">
+        <View className="px-screen md:px-10 lg:px-20 pt-[66px] items-center">
           <View className="w-full max-w-[480px] gap-12">
             <Text className="text-title font-medium font-sans text-black">
               요리에 추가할 재료를{'\n'}선택하세요
