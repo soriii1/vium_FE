@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, ScrollView, Pressable, Alert, TextInput, ActivityIndicator } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as ImagePicker from 'expo-image-picker';
 import { ImageUpload, LabelInput, LabelInputWithUnit, DatePicker, AppHeader } from '@/shared/ui';
 import BackIcon from '@/../assets/icons/back-icon.svg';
@@ -41,7 +40,6 @@ export const FridgeEditPage: React.FC = () => {
  */
 const FridgeEditForm: React.FC<{ ingredient: IngredientApiResponse }> = ({ ingredient }) => {
   const router = useRouter();
-  const insets = useSafeAreaInsets();
   const isCatalogItem = ingredient.ingredientCatalogId !== null;
   const { save, isSaving } = useIngredientEdit(ingredient.inventoryItemId, isCatalogItem);
 
@@ -147,20 +145,20 @@ const FridgeEditForm: React.FC<{ ingredient: IngredientApiResponse }> = ({ ingre
         </View>
       </ScrollView>
 
-      {/* 이 화면은 하단 탭이 없어서 기기 하단 안전 영역만큼만 띄움 */}
-      <View className="px-12 pt-4 items-center" style={{ paddingBottom: Math.max(insets.bottom, 16) + 24 }}>
-        {isSaving ? (
-          <View className="bg-neutral-500 h-[68px] w-[299px] rounded-3xl items-center justify-center">
+      {/* 다른 화면(레시피·냉장고 정리)과 같은 위치에 버튼 고정 */}
+      <View className="px-12 pt-4 pb-[100px] items-center">
+        {/* 저장 중에도 버튼 크기가 바뀌지 않도록 높이 고정, 내용만 교체 */}
+        <Pressable
+          className={`bg-neutral-500 rounded-3xl items-center justify-center px-2.5 h-[54px] w-[299px] ${isSaving ? 'opacity-70' : ''}`}
+          onPress={handleSave}
+          disabled={isSaving}
+        >
+          {isSaving ? (
             <ActivityIndicator color="#fff" />
-          </View>
-        ) : (
-          <Pressable
-            className="bg-neutral-500 rounded-3xl items-center justify-center px-2.5 py-[15px] w-[299px]"
-            onPress={handleSave}
-          >
+          ) : (
             <Text className="text-text-400 text-subtitle text-center font-sans">수정 완료</Text>
-          </Pressable>
-        )}
+          )}
+        </Pressable>
       </View>
     </View>
   );
