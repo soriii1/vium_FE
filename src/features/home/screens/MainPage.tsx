@@ -3,6 +3,7 @@ import { View, Text, ScrollView, Pressable } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Banner, AppHeader } from '@/shared/ui';
 import { useFridgeCleanup, FridgeCleanupModal } from '@/features/fridge';
+import { useRecipesList } from '@/features/recipe';
 import ReportIcon from '@/../assets/icons/report-icon.svg';
 import CartIcon from '@/../assets/icons/cart-icon.svg';
 import BrushIcon from '@/../assets/icons/brush-icon.svg';
@@ -18,21 +19,19 @@ export const MainPage = () => {
   const handleBannerPress = (variant: 'tomato' | 'potato' | 'onion') => {
     if (variant === 'tomato') router.push('/recipe' as any);
     if (variant === 'potato') router.push('/report' as any);
-    // TODO: 장보기 페이지가 생기면 onion 배너 연결
+    if (variant === 'onion') router.push('/shopping' as any);
   };
 
   const menuItems = [
     { icon: ReportIcon, label: '식재료 리포트', onPress: () => router.push('/report' as any) },
-    { icon: CartIcon, label: '장보기 도우미', onPress: () => console.log('장보기 도우미') },
+    { icon: CartIcon, label: '장보기 도우미', onPress: () => router.push('/shopping' as any) },
     { icon: BrushIcon, label: '냉장고 대청소', onPress: openCleanupModal },
     { icon: RefrigeratorIcon, label: 'My 냉장고', onPress: () => router.push('/fridge') },
     { icon: ChefIcon, label: '레시피', onPress: () => router.push('/recipe') },
   ];
 
-  const recipes = [
-    { id: 1, title: '당근김치찌개', ingredients: ['당근', '감자'], cookTimeMinutes: 20 },
-    { id: 2, title: '감자조림', ingredients: ['감자', '양파'], cookTimeMinutes: 25 },
-  ];
+  const { recipes: allRecipes } = useRecipesList();
+  const recipes = allRecipes.slice(0, 5);
   return (
     <View className="flex-1 bg-white">
       <ScrollView className="flex-1" contentContainerStyle={{ paddingBottom: 140 }}>
@@ -50,7 +49,6 @@ export const MainPage = () => {
           <View className="items-center gap-[53px]">
             <Banner onPress={handleBannerPress} />
 
-            {/* Menu Grid */}
             <View className="w-full items-center gap-10">
               <View className="w-full flex-row flex-wrap gap-y-8">
                 {menuItems.map((item) => (
@@ -70,7 +68,6 @@ export const MainPage = () => {
             </View>
           </View>
 
-          {/* Recipe Section */}
           <View className="gap-4">
             <Pressable
               className="flex-row items-center justify-between"
@@ -104,7 +101,7 @@ export const MainPage = () => {
                       </Text>
                     </Text>
                     <Text numberOfLines={1} className="text-[13px] font-sans text-neutral-400">
-                      {recipe.ingredients.map((ingredient) => `#${ingredient}`).join(' ')}
+                      {recipe.tags.join(' ')}
                     </Text>
                   </View>
                 </Pressable>

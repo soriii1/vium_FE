@@ -43,11 +43,9 @@ export const ReportPage: React.FC = () => {
         className="bg-white px-screen md:px-10 lg:px-20 pt-8 pb-8 mt-[43px] items-center"
       >
         <View className="w-full max-w-[480px] items-center gap-[50px]">
-          {/* 월 선택 */}
           <ReportMonthPicker value={selectedMonth} onChange={setSelectedMonth} />
 
           <View className="w-full gap-[54px]">
-            {/* 이번달 식비 */}
             <View className="gap-4">
               <Text className="text-[18px] font-medium font-sans text-text-100">이번달 식비</Text>
               <View className="bg-primary-300 rounded-lg p-5 gap-2">
@@ -60,7 +58,6 @@ export const ReportPage: React.FC = () => {
               </View>
             </View>
 
-            {/* 재료 요약 */}
             <View className="px-[14px] gap-8">
               <View className="px-[5px] gap-3">
                 {summaryRows.map((row) => (
@@ -77,7 +74,6 @@ export const ReportPage: React.FC = () => {
               <View className="h-px bg-neutral-100" />
             </View>
 
-            {/* 폐기 카테고리 */}
             <View className="px-[7px] gap-[15px]">
               <View className="gap-4">
                 <Text className="text-[18px] font-medium font-sans text-text-100">
@@ -101,7 +97,6 @@ export const ReportPage: React.FC = () => {
                 </View>
               </View>
 
-              {/* 폐기 순위 */}
               <View key={animationKey} className="px-[7px] gap-[6px]">
                 {report.topWastedItems.map((item, index) => (
                   <Animated.View
@@ -138,7 +133,6 @@ export const ReportPage: React.FC = () => {
         </View>
       </View>
 
-      {/* 하단 액션 */}
       <View className="px-screen md:px-10 lg:px-20 pt-8 items-center">
         <View className="w-full max-w-[480px] gap-16 items-center">
           <Text className="text-[12px] font-sans text-text-50 text-center">

@@ -115,7 +115,6 @@ export const FridgePage = () => {
 
   return (
     <View className="flex-1 bg-white">
-      {/* 일반 모드 또는 삭제 모드 헤더 */}
       {!isDeleteMode ? (
         <FridgeHeader
           title={fridgeTitle}
@@ -152,7 +151,6 @@ export const FridgePage = () => {
         </View>
       )}
 
-      {/* 일반 모드 또는 삭제 모드 그리드 */}
       {!isDeleteMode ? (
         <FridgeGrid
           items={fridgeItems}
@@ -180,7 +178,6 @@ export const FridgePage = () => {
                         visible={true}
                       />
 
-                      {/* Selection Indicator - 카드 위에 절대 위치 */}
                       <View className="absolute top-2 right-2 z-20">
                         <View className={`w-[17px] h-[17px] rounded-full border-2 border-neutral-400 ${
                           isSelected ? 'bg-neutral-300' : 'bg-white'

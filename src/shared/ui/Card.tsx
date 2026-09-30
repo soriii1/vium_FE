@@ -24,7 +24,6 @@ export const Card: React.FC<CardProps> = ({
   onPress,
   style,
 }) => {
-  // Empty Card (Add New Card)
   if (variant === 'empty') {
     return (
       <Pressable onPress={onPress}>

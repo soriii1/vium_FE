@@ -77,7 +77,6 @@ export const LabelInputWithUnit: React.FC<LabelInputWithUnitProps> = ({
         </View>
       </View>
 
-      {/* Unit Selection Modal */}
       <Modal
         visible={showUnitModal}
         transparent

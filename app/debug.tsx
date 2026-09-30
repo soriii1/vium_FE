@@ -15,7 +15,6 @@ export default function DebugPage() {
           Component Debug Page
         </Text>
 
-        {/* NavBar Component */}
         <View className="mb-8">
           <Text className="text-subtitle font-medium mb-3 text-text-100 font-sans">
             NavBar Component
@@ -23,7 +22,6 @@ export default function DebugPage() {
           <NavBar />
         </View>
 
-        {/* Check Component */}
         <View className="mb-8">
           <Text className="text-subtitle font-medium mb-3 text-text-100 font-sans">
             Check Component
@@ -40,7 +38,6 @@ export default function DebugPage() {
           </View>
         </View>
 
-        {/* StateBall Component */}
         <View className="mb-8">
           <Text className="text-subtitle font-medium mb-3 text-text-100 font-sans">
             StateBall Component
@@ -61,7 +58,6 @@ export default function DebugPage() {
           </View>
         </View>
 
-        {/* Card Component */}
         <View className="mb-8">
           <Text className="text-subtitle font-medium mb-3 text-text-100 font-sans">
             Card Component
@@ -102,7 +98,6 @@ export default function DebugPage() {
           </View>
         </View>
 
-        {/* Banner Component */}
         <View className="mb-8">
           <Text className="text-subtitle font-medium mb-3 text-text-100 font-sans">
             Banner Component
@@ -110,7 +105,6 @@ export default function DebugPage() {
           <Banner onPress={(variant) => console.log(`${variant} banner pressed`)} />
         </View>
 
-        {/* InputBox Component */}
         <View className="mb-8">
           <Text className="text-subtitle font-medium mb-3 text-text-100 font-sans">
             InputBox Component
@@ -155,7 +149,6 @@ export default function DebugPage() {
           </View>
         </View>
 
-        {/* Button Component */}
         <View className="mb-8">
           <Text className="text-subtitle font-medium mb-3 text-text-100 font-sans">
             Button Component
@@ -173,7 +166,6 @@ export default function DebugPage() {
           </View>
         </View>
 
-        {/* AddButton Component */}
         <View className="mb-8">
           <Text className="text-subtitle font-medium mb-3 text-text-100 font-sans">
             AddButton Component

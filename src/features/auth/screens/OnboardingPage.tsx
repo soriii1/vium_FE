@@ -16,14 +16,12 @@ export const OnboardingPage = () => {
 
   const handleStart = () => {
     // TODO: Save onboarding data
-    // 온보딩으로 뒤로 가지 않도록 replace
     router.replace('/main');
   };
 
   return (
     <View className="flex-1 bg-white">
       <View className="flex-1 px-screen md:px-10 lg:px-20 pt-[166px] items-center">
-        {/* 상단 여백 안에 배치해 기존 레이아웃은 그대로 */}
         <View className="absolute top-0 left-0 right-0">
           <AppHeader />
         </View>

@@ -7,6 +7,7 @@ import BackIcon from '@/../assets/icons/back-icon.svg';
 import { useIngredientDetail } from '../lib/useIngredientDetail';
 import { useIngredientEdit } from '../lib/useIngredientEdit';
 import { parseDateString } from '../lib/dateUtils';
+import { getIngredientImage } from '../lib/ingredientImageFixtures';
 import { StorageMethodSelect, STORAGE_METHOD_OPTIONS } from '../ui/StorageMethodSelect';
 import { IngredientApiResponse } from '../types';
 
@@ -43,7 +44,7 @@ const FridgeEditForm: React.FC<{ ingredient: IngredientApiResponse }> = ({ ingre
   const isCatalogItem = ingredient.ingredientCatalogId !== null;
   const { save, isSaving } = useIngredientEdit(ingredient.inventoryItemId, isCatalogItem);
 
-  const [imageUri, setImageUri] = useState<string | undefined>(undefined);
+  const [imageUri, setImageUri] = useState<string | undefined>(getIngredientImage(ingredient.name, 'large'));
   const [name, setName] = useState(ingredient.name);
   const [quantity, setQuantity] = useState(String(ingredient.initialQuantity));
   const [unitId, setUnitId] = useState(ingredient.unitId);
@@ -145,7 +146,6 @@ const FridgeEditForm: React.FC<{ ingredient: IngredientApiResponse }> = ({ ingre
         </View>
       </ScrollView>
 
-      {/* 다른 화면(레시피·냉장고 정리)과 같은 위치에 버튼 고정 */}
       <View className="px-12 pt-4 pb-[100px] items-center">
         {/* 저장 중에도 버튼 크기가 바뀌지 않도록 높이 고정, 내용만 교체 */}
         <Pressable

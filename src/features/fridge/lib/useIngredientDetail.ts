@@ -45,7 +45,6 @@ export const useIngredientDetail = (ingredientId: number) => {
     }
   }, [ingredientId]);
 
-  // 화면에 다시 들어올 때마다 갱신 (수정 화면에서 돌아온 경우 등)
   useFocusEffect(
     useCallback(() => {
       loadIngredientDetail();

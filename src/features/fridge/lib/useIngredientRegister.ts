@@ -5,6 +5,8 @@ import { IngredientRegisterRequest } from '../types';
 
 export interface IngredientFormData {
   name: string;
+  // 카탈로그에서 고른 재료 (직접 입력한 재료는 undefined — 레시피 추천에서 제외됨)
+  ingredientCatalogId?: number;
   amount: string;
   unitId: number;
   storageMethodId: number;
@@ -44,6 +46,7 @@ export const useIngredientRegister = () => {
       }
 
       const request: IngredientRegisterRequest = {
+        ingredientCatalogId: formData.ingredientCatalogId,
         customName: formData.name,
         quantity: parseFloat(formData.amount) || 1,
         unitId: formData.unitId,

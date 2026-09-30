@@ -60,7 +60,6 @@ export const MyPage: React.FC = () => {
 
       <View className="items-center px-screen pt-[55px]">
         <View className="w-full max-w-[271px] items-center gap-[78px]">
-          {/* 프로필 */}
           <View className="w-full max-w-[256px] items-center gap-[26px]">
             <View className="items-center gap-6">
               <View className="w-[117px] h-[117px] rounded-full border-[3px] border-secondary-400 overflow-hidden bg-neutral-50">
@@ -90,7 +89,6 @@ export const MyPage: React.FC = () => {
             </Pressable>
           </View>
 
-          {/* 메뉴 */}
           <View className="w-full gap-[33px]">
             {MENU_ITEMS.map((item) => (
               <Pressable

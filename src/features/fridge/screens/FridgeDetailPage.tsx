@@ -4,6 +4,7 @@ import { Image } from 'expo-image';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { StatusBadge, DetailInfoRow, AppHeader } from '@/shared/ui';
 import { useIngredientDetail } from '../lib/useIngredientDetail';
+import { getIngredientImage } from '../lib/ingredientImageFixtures';
 import BackIcon from '@/../assets/icons/back-icon.svg';
 import EditIcon from '@/../assets/icons/edit-icon.svg';
 
@@ -34,17 +35,14 @@ export const FridgeDetailPage = () => {
     );
   }
 
-  // 목데이터용 이미지 (당근 이미지)
-  const carrotImage = 'https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=800&q=80';
+  const detailImage = getIngredientImage(item.title, 'large');
 
   return (
     <View className="flex-1 bg-white">
       <ScrollView className="flex-1">
         <AppHeader />
 
-        {/* Content */}
         <View className="px-screen pt-8">
-          {/* Back Button */}
           <TouchableOpacity
             onPress={() => router.back()}
             className="w-[30px] h-[30px] items-center justify-center"
@@ -52,20 +50,14 @@ export const FridgeDetailPage = () => {
             <BackIcon width={30} height={30} />
           </TouchableOpacity>
 
-          {/* Image and Details Container */}
           <View className="pt-[41px]">
-            {/* Food Image */}
-            <View className="w-full h-[241px] rounded-2xl overflow-hidden bg-neutral-100">
-              <Image
-                source={{ uri: carrotImage }}
-                contentFit="cover"
-                className="w-full h-full"
-              />
+            <View className="w-full h-[241px] rounded-2xl overflow-hidden bg-neutral-10 items-center justify-center">
+              {detailImage && (
+                <Image source={{ uri: detailImage }} contentFit="contain" className="w-[70%] h-[80%]" />
+              )}
             </View>
 
-            {/* Details Section */}
             <View className="pt-6 px-2.5">
-              {/* Title and Status Badge */}
               <View className="flex-row justify-between items-center h-8 mb-[32px]">
                 <View className="flex-row items-center gap-2 flex-1 mr-3">
                   <Text numberOfLines={1} className="text-title font-bold font-sans text-text-100 shrink">
@@ -83,7 +75,6 @@ export const FridgeDetailPage = () => {
                 <StatusBadge status={item.status} />
               </View>
 
-              {/* Info List */}
               <View className="gap-y-4">
                 <DetailInfoRow label="양" value={item.quantity} />
                 <DetailInfoRow label="가격" value={item.price} />
@@ -95,7 +86,6 @@ export const FridgeDetailPage = () => {
         </View>
       </ScrollView>
 
-      {/* Bottom Navigation */}
     </View>
   );
 };

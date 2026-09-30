@@ -44,7 +44,6 @@ export const ProfileEditPage: React.FC = () => {
 
         <View className="flex-1 items-center px-screen pt-[55px]">
           <View className="w-full max-w-[271px] items-center gap-[42px]">
-            {/* 프로필 이미지 */}
             <View className="w-[117px] h-[117px]">
               <View className="w-full h-full rounded-full border-[3px] border-secondary-400 overflow-hidden bg-neutral-50">
                 {profileImageUrl && (
@@ -59,7 +58,6 @@ export const ProfileEditPage: React.FC = () => {
               </Pressable>
             </View>
 
-            {/* 닉네임 */}
             <View className="w-full gap-2">
               <Text className="text-text14 font-sans text-text-300">닉네임</Text>
               <View className="flex-row items-center justify-between">
@@ -84,7 +82,6 @@ export const ProfileEditPage: React.FC = () => {
               </Text>
             </View>
 
-            {/* 아이디 (수정 불가) */}
             <View className="w-full gap-2">
               <Text className="text-text14 font-sans text-text-300">아이디</Text>
               <Text className="text-subtitle font-sans text-neutral-200">@{handle}</Text>
