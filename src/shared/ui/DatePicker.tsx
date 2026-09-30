@@ -41,11 +41,18 @@ export const DatePicker: React.FC<DatePickerProps> = ({
     setShow(false);
   };
 
-  const formatDate = (date: Date): string => {
+  const formatDate = (date: Date, separator = '/'): string => {
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const day = String(date.getDate()).padStart(2, '0');
-    return `${year}/${month}/${day}`;
+    return [year, month, day].join(separator);
+  };
+
+  // <input type="date">의 값(YYYY-MM-DD)을 로컬 날짜로 변환 (new Date(문자열)은 UTC 기준이라 하루 밀릴 수 있음)
+  const handleWebChange = (inputValue: string) => {
+    if (!inputValue) return;
+    const [year, month, day] = inputValue.split('-').map(Number);
+    onChange(new Date(year, month - 1, day));
   };
 
   return (
@@ -60,6 +67,20 @@ export const DatePicker: React.FC<DatePickerProps> = ({
         <Text className="text-text15 font-sans" style={{ color: '#242529' }}>
           {formatDate(value)}
         </Text>
+
+        {/* 웹은 DateTimePicker가 없어 브라우저 기본 날짜 선택창을 투명하게 덮어 사용 */}
+        {Platform.OS === 'web' && (
+          <input
+            type="date"
+            value={formatDate(value, '-')}
+            min="2020-01-01"
+            max="2030-12-31"
+            onChange={(e) => handleWebChange(e.target.value)}
+            // 데스크톱 크롬은 입력칸을 눌러도 달력이 안 열려 직접 열어줌
+            onClick={(e) => e.currentTarget.showPicker?.()}
+            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', opacity: 0, cursor: 'pointer' }}
+          />
+        )}
       </Pressable>
 
       {show && Platform.OS === 'android' && (
