@@ -3,6 +3,7 @@ import { View, Text, ScrollView, Pressable, Alert, TextInput, ActivityIndicator 
 import { useRouter } from 'expo-router';
 import { ImageUpload, LabelInput, LabelInputWithUnit, DatePicker, Button } from '@/shared/ui';
 import { useIngredientRegister } from '../lib/useIngredientRegister';
+import { StorageMethodSelect, STORAGE_METHOD_OPTIONS } from '../ui/StorageMethodSelect';
 import * as ImagePicker from 'expo-image-picker';
 import BackIcon from '@/../assets/icons/back-icon.svg';
 
@@ -14,6 +15,7 @@ export const FridgeAddPage: React.FC = () => {
   const [amount, setAmount] = useState('');
   const [unitId, setUnitId] = useState(0);
   const [unitLabel, setUnitLabel] = useState('');
+  const [storageMethodId, setStorageMethodId] = useState<number>(STORAGE_METHOD_OPTIONS[0].id);
   const [price, setPrice] = useState('');
   const [registeredDate, setRegisteredDate] = useState(new Date());
   const [expiryDate, setExpiryDate] = useState(new Date());
@@ -54,6 +56,7 @@ export const FridgeAddPage: React.FC = () => {
       name,
       amount,
       unitId,
+      storageMethodId,
       price,
       registeredDate: formatDateToString(registeredDate),
       expiryDate: formatDateToString(expiryDate),
@@ -111,6 +114,7 @@ export const FridgeAddPage: React.FC = () => {
                 placeholder="입력하세요"
                 keyboardType="numeric"
               />
+              <StorageMethodSelect label="보관방법" value={storageMethodId} onChange={setStorageMethodId} />
               <DatePicker
                 label="등록일자"
                 value={registeredDate}
