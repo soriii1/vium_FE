@@ -19,12 +19,12 @@ export const MainPage = () => {
   const handleBannerPress = (variant: 'tomato' | 'potato' | 'onion') => {
     if (variant === 'tomato') router.push('/recipe' as any);
     if (variant === 'potato') router.push('/report' as any);
-    // TODO: 장보기 페이지가 생기면 onion 배너 연결
+    if (variant === 'onion') router.push('/shopping' as any);
   };
 
   const menuItems = [
     { icon: ReportIcon, label: '식재료 리포트', onPress: () => router.push('/report' as any) },
-    { icon: CartIcon, label: '장보기 도우미', onPress: () => console.log('장보기 도우미') },
+    { icon: CartIcon, label: '장보기 도우미', onPress: () => router.push('/shopping' as any) },
     { icon: BrushIcon, label: '냉장고 대청소', onPress: openCleanupModal },
     { icon: RefrigeratorIcon, label: 'My 냉장고', onPress: () => router.push('/fridge') },
     { icon: ChefIcon, label: '레시피', onPress: () => router.push('/recipe') },

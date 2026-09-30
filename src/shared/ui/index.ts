@@ -15,3 +15,4 @@ export { LabelInputWithUnit } from './LabelInputWithUnit';
 export { DatePicker } from './DatePicker';
 export { Logo } from './Logo';
 export { AppHeader } from './AppHeader';
+export { ComingSoon } from './ComingSoon';
