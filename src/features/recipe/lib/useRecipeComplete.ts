@@ -3,6 +3,7 @@ import { Alert } from 'react-native';
 import { isAxiosError } from 'axios';
 import { completeRecipe } from '../api/recipesApi';
 import { CookUsageItem } from './recipeCookStore';
+import { recipeListCache } from './recipeListCache';
 
 /**
  * 요리 완료 — 슬라이더의 남긴 비율(remainingPercent)을 사용 비율(usageRate)로 바꿔 재고에서 차감
@@ -21,6 +22,8 @@ export const useRecipeComplete = () => {
     try {
       setIsSubmitting(true);
       await completeRecipe(recipeId, { usages });
+      // 재고가 바뀌어 추천 결과도 달라지므로 다음 목록 진입 때 새로 받음
+      recipeListCache.invalidate();
       return true;
     } catch (err) {
       console.error('Failed to complete recipe:', err);

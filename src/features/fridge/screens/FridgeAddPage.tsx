@@ -117,13 +117,13 @@ export const FridgeAddPage: React.FC = () => {
               />
               {catalogItem ? (
                 <Text className="text-text14 font-sans text-primary-800">기본 식재료로 등록돼요 · 레시피 추천에 쓰여요</Text>
-              ) : (
+              ) : name.trim() ? (
                 <CatalogSuggestions
                   items={catalogItems}
                   isLoading={isSearchingCatalog}
                   onSelect={handleSelectCatalog}
                 />
-              )}
+              ) : null}
             </View>
 
             <View className="gap-4">

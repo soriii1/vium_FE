@@ -19,7 +19,13 @@ export const CatalogSuggestions: React.FC<CatalogSuggestionsProps> = ({ items, i
     );
   }
 
-  if (items.length === 0) return null;
+  if (items.length === 0) {
+    return (
+      <Text className="text-text14 font-sans text-text-300">
+        목록에 없는 재료예요. 입력한 이름으로 등록되고, 레시피 추천에는 쓰이지 않아요.
+      </Text>
+    );
+  }
 
   return (
     <View className="border border-neutral-50 rounded-lg overflow-hidden">
