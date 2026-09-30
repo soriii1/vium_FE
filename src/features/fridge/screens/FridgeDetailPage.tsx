@@ -4,6 +4,7 @@ import { Image } from 'expo-image';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { StatusBadge, DetailInfoRow, AppHeader } from '@/shared/ui';
 import { useIngredientDetail } from '../lib/useIngredientDetail';
+import { getIngredientImage } from '../lib/ingredientImageFixtures';
 import BackIcon from '@/../assets/icons/back-icon.svg';
 import EditIcon from '@/../assets/icons/edit-icon.svg';
 
@@ -34,8 +35,7 @@ export const FridgeDetailPage = () => {
     );
   }
 
-  // 목데이터용 이미지 (당근 이미지)
-  const carrotImage = 'https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=800&q=80';
+  const detailImage = getIngredientImage(item.title, 'large');
 
   return (
     <View className="flex-1 bg-white">
@@ -51,12 +51,10 @@ export const FridgeDetailPage = () => {
           </TouchableOpacity>
 
           <View className="pt-[41px]">
-            <View className="w-full h-[241px] rounded-2xl overflow-hidden bg-neutral-100">
-              <Image
-                source={{ uri: carrotImage }}
-                contentFit="cover"
-                className="w-full h-full"
-              />
+            <View className="w-full h-[241px] rounded-2xl overflow-hidden bg-neutral-10 items-center justify-center">
+              {detailImage && (
+                <Image source={{ uri: detailImage }} contentFit="contain" className="w-[70%] h-[80%]" />
+              )}
             </View>
 
             <View className="pt-6 px-2.5">

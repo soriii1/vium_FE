@@ -7,6 +7,7 @@ import BackIcon from '@/../assets/icons/back-icon.svg';
 import { useIngredientDetail } from '../lib/useIngredientDetail';
 import { useIngredientEdit } from '../lib/useIngredientEdit';
 import { parseDateString } from '../lib/dateUtils';
+import { getIngredientImage } from '../lib/ingredientImageFixtures';
 import { StorageMethodSelect, STORAGE_METHOD_OPTIONS } from '../ui/StorageMethodSelect';
 import { IngredientApiResponse } from '../types';
 
@@ -43,7 +44,7 @@ const FridgeEditForm: React.FC<{ ingredient: IngredientApiResponse }> = ({ ingre
   const isCatalogItem = ingredient.ingredientCatalogId !== null;
   const { save, isSaving } = useIngredientEdit(ingredient.inventoryItemId, isCatalogItem);
 
-  const [imageUri, setImageUri] = useState<string | undefined>(undefined);
+  const [imageUri, setImageUri] = useState<string | undefined>(getIngredientImage(ingredient.name, 'large'));
   const [name, setName] = useState(ingredient.name);
   const [quantity, setQuantity] = useState(String(ingredient.initialQuantity));
   const [unitId, setUnitId] = useState(ingredient.unitId);

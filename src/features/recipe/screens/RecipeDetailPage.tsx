@@ -1,5 +1,5 @@
 import React from 'react';
-import { ActivityIndicator, Pressable, ScrollView, Text, View } from 'react-native';
+import { ActivityIndicator, Alert, Pressable, ScrollView, Text, View } from 'react-native';
 import { Image } from 'expo-image';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import BackIcon from '@/../assets/icons/back-icon.svg';
@@ -34,7 +34,13 @@ export const RecipeDetailPage: React.FC = () => {
   }
 
   const handleFinishCooking = () => {
-    recipeCookStore.startCookCompletion(recipe.id, recipe.ingredients);
+    // 사용량은 냉장고에 있는 재료만 기록할 수 있음
+    const fridgeIngredients = recipe.ingredients.filter((ingredient) => ingredient.inventoryId != null);
+    if (fridgeIngredients.length === 0) {
+      Alert.alert('알림', '냉장고에 있는 재료가 없어 기록할 사용량이 없어요.');
+      return;
+    }
+    recipeCookStore.startCookCompletion(recipe.id, fridgeIngredients);
     router.push(`/recipe/${recipe.id}/waste` as any);
   };
 
@@ -73,7 +79,7 @@ export const RecipeDetailPage: React.FC = () => {
                     <Text className="text-text16 font-medium font-sans text-neutral-200">사용재료</Text>
                     <View className="flex-row flex-wrap gap-x-6 gap-y-[14px]">
                       {recipe.ingredients.map((ingredient, index) => (
-                        <RecipeIngredientCircle key={`${ingredient.id}-${index}`} name={ingredient.name} />
+                        <RecipeIngredientCircle key={`${ingredient.id}-${index}`} name={ingredient.name} image={ingredient.image} />
                       ))}
                       <RecipeIngredientCircle
                         name="추가"

@@ -5,12 +5,14 @@ import PlusBadgeIcon from '@/../assets/icons/plus-badge-icon.svg';
 
 interface RecipeIngredientCircleProps {
   name: string;
+  image?: string;
   onPress?: () => void;
   isAddButton?: boolean;
 }
 
 export const RecipeIngredientCircle: React.FC<RecipeIngredientCircleProps> = ({
   name,
+  image,
   onPress,
   isAddButton = false,
 }) => {
@@ -28,7 +30,9 @@ export const RecipeIngredientCircle: React.FC<RecipeIngredientCircleProps> = ({
           </View>
         </View>
       ) : (
-        <View className="w-[38px] h-[38px] rounded-full bg-neutral-50" />
+        <View className="w-[38px] h-[38px] rounded-full bg-neutral-50 items-center justify-center overflow-hidden">
+          {image && <Image source={{ uri: image }} contentFit="contain" style={{ width: 30, height: 30 }} />}
+        </View>
       )}
       <Text
         className="text-[12px] font-sans text-black text-center"

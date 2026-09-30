@@ -2,7 +2,7 @@ import React from 'react';
 import { Pressable, ScrollView, Text } from 'react-native';
 import { RecipeCategory } from '../types';
 
-const CATEGORIES: RecipeCategory[] = ['전체', '한식', '양식', '일식', '디저트'];
+const CATEGORIES: RecipeCategory[] = ['전체', '한식', '중식', '양식', '일식', '디저트'];
 
 interface RecipeCategoryFilterProps {
   selected: RecipeCategory;

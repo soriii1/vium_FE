@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
-import { View, Text, ScrollView, Pressable, Alert, TextInput, ActivityIndicator } from 'react-native';
+import { View, Text, ScrollView, Pressable, Alert, TextInput, ActivityIndicator, Keyboard } from 'react-native';
 import { useRouter } from 'expo-router';
 import { ImageUpload, LabelInput, LabelInputWithUnit, DatePicker, Button, AppHeader } from '@/shared/ui';
 import { useIngredientRegister } from '../lib/useIngredientRegister';
 import { StorageMethodSelect, STORAGE_METHOD_OPTIONS } from '../ui/StorageMethodSelect';
+import { useIngredientCatalogSearch } from '../lib/useIngredientCatalogSearch';
+import { CatalogSuggestions } from '../ui/CatalogSuggestions';
+import { IngredientCatalogItem } from '../types';
 import * as ImagePicker from 'expo-image-picker';
 import BackIcon from '@/../assets/icons/back-icon.svg';
 
@@ -12,6 +15,7 @@ export const FridgeAddPage: React.FC = () => {
   const { register, isLoading } = useIngredientRegister();
   const [imageUri, setImageUri] = useState<string | undefined>(undefined);
   const [name, setName] = useState('');
+  const [catalogItem, setCatalogItem] = useState<IngredientCatalogItem | null>(null);
   const [amount, setAmount] = useState('');
   const [unitId, setUnitId] = useState(0);
   const [unitLabel, setUnitLabel] = useState('');
@@ -39,6 +43,21 @@ export const FridgeAddPage: React.FC = () => {
     }
   };
 
+  const { items: catalogItems, isLoading: isSearchingCatalog } = useIngredientCatalogSearch(name, catalogItem === null);
+
+  // 카탈로그 재료를 고른 뒤 이름을 고치면 직접 입력 재료로 전환
+  const handleNameChange = (text: string) => {
+    setName(text);
+    if (catalogItem && text !== catalogItem.name) setCatalogItem(null);
+  };
+
+  const handleSelectCatalog = (item: IngredientCatalogItem) => {
+    setCatalogItem(item);
+    setName(item.name);
+    setUnitId(item.defaultUnitId);
+    Keyboard.dismiss();
+  };
+
   const handleUnitChange = (id: number, label: string) => {
     setUnitId(id);
     setUnitLabel(label);
@@ -54,6 +73,7 @@ export const FridgeAddPage: React.FC = () => {
   const handleRegister = async () => {
     const success = await register({
       name,
+      ingredientCatalogId: catalogItem?.ingredientCatalogId,
       amount,
       unitId,
       storageMethodId,
@@ -73,6 +93,7 @@ export const FridgeAddPage: React.FC = () => {
       <ScrollView
         className="flex-1"
         showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
         contentContainerStyle={{ paddingBottom: 32 }}
       >
         <AppHeader />
@@ -85,15 +106,24 @@ export const FridgeAddPage: React.FC = () => {
           <View className="gap-6 w-full max-w-[346px]">
             <ImageUpload imageUri={imageUri} onPress={handleImagePick} />
 
-            <View className="gap-[5px] flex-row items-center">
+            <View className="gap-2">
               <TextInput
-                className="text-title font-medium font-sans flex-1"
+                className="text-title font-medium font-sans"
                 style={{ fontFamily: 'Paperlogy' }}
                 value={name}
-                onChangeText={setName}
+                onChangeText={handleNameChange}
                 placeholder="입력해주세요"
                 placeholderTextColor="#878787"
               />
+              {catalogItem ? (
+                <Text className="text-text14 font-sans text-primary-800">기본 식재료로 등록돼요 · 레시피 추천에 쓰여요</Text>
+              ) : (
+                <CatalogSuggestions
+                  items={catalogItems}
+                  isLoading={isSearchingCatalog}
+                  onSelect={handleSelectCatalog}
+                />
+              )}
             </View>
 
             <View className="gap-4">

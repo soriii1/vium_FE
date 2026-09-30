@@ -1,6 +1,7 @@
 import { FridgeItemDetail, FridgeItemStatus } from '../types';
 import { IngredientApiResponse } from '../types';
 import { getDaysDifference, formatDate, formatDateWithSuffix } from './dateUtils';
+import { getIngredientImage } from './ingredientImageFixtures';
 
 export const mapIngredientToFridgeItem = (ingredient: IngredientApiResponse): FridgeItemDetail => {
   const daysLeft = getDaysDifference(ingredient.expiresOn);
@@ -22,6 +23,7 @@ export const mapIngredientToFridgeItem = (ingredient: IngredientApiResponse): Fr
     subtitle,
     status,
     remainingQuantity: ingredient.remainingQuantity,
+    image: getIngredientImage(ingredient.name),
     quantity,
     price,
     registeredDate: formatDate(ingredient.purchasedOn),

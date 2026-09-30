@@ -25,6 +25,7 @@ export const useIngredientsList = () => {
           subtitle: item.subtitle,
           status: item.status,
           remainingQuantity: item.remainingQuantity,
+          image: item.image,
         }));
         setItems(fridgeItems);
       } else {

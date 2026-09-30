@@ -3,6 +3,7 @@ import { View, Text, ScrollView, Pressable } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Banner, AppHeader } from '@/shared/ui';
 import { useFridgeCleanup, FridgeCleanupModal } from '@/features/fridge';
+import { useRecipesList } from '@/features/recipe';
 import ReportIcon from '@/../assets/icons/report-icon.svg';
 import CartIcon from '@/../assets/icons/cart-icon.svg';
 import BrushIcon from '@/../assets/icons/brush-icon.svg';
@@ -29,10 +30,8 @@ export const MainPage = () => {
     { icon: ChefIcon, label: '레시피', onPress: () => router.push('/recipe') },
   ];
 
-  const recipes = [
-    { id: 1, title: '당근김치찌개', ingredients: ['당근', '감자'], cookTimeMinutes: 20 },
-    { id: 2, title: '감자조림', ingredients: ['감자', '양파'], cookTimeMinutes: 25 },
-  ];
+  const { recipes: allRecipes } = useRecipesList();
+  const recipes = allRecipes.slice(0, 5);
   return (
     <View className="flex-1 bg-white">
       <ScrollView className="flex-1" contentContainerStyle={{ paddingBottom: 140 }}>
@@ -102,7 +101,7 @@ export const MainPage = () => {
                       </Text>
                     </Text>
                     <Text numberOfLines={1} className="text-[13px] font-sans text-neutral-400">
-                      {recipe.ingredients.map((ingredient) => `#${ingredient}`).join(' ')}
+                      {recipe.tags.join(' ')}
                     </Text>
                   </View>
                 </Pressable>

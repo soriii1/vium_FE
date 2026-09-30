@@ -1,8 +1,9 @@
 import React, { useEffect, useRef } from 'react';
-import { Pressable, ScrollView, Text, View } from 'react-native';
+import { ActivityIndicator, Pressable, ScrollView, Text, View } from 'react-native';
 import Slider from '@react-native-community/slider';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useRecipeCookStore } from '../lib/recipeCookStore';
+import { useRecipeComplete } from '../lib/useRecipeComplete';
 import { AppHeader } from '@/shared/ui';
 
 export const RecipeWastePage: React.FC = () => {
@@ -10,6 +11,7 @@ export const RecipeWastePage: React.FC = () => {
   const { id } = useLocalSearchParams<{ id: string }>();
   const recipeId = parseInt(id || '1', 10);
   const { items, setRemainingPercent, reset } = useRecipeCookStore();
+  const { complete, isSubmitting } = useRecipeComplete();
   const isFinishingRef = useRef(false);
 
   // 선택된 재료 없이 이 화면으로 바로 들어온 경우 상세 화면으로 돌려보냄
@@ -19,8 +21,9 @@ export const RecipeWastePage: React.FC = () => {
     }
   }, [items.length]);
 
-  // 레시피 API 연동 전까지는 서버에 저장하지 않습니다.
-  const handleComplete = () => {
+  const handleComplete = async () => {
+    const success = await complete(recipeId, items);
+    if (!success) return;
     isFinishingRef.current = true;
     reset();
     router.replace('/recipe' as any);
@@ -72,10 +75,15 @@ export const RecipeWastePage: React.FC = () => {
 
       <View className="px-12 pb-[100px] items-center">
         <Pressable
-          className="bg-neutral-500 rounded-3xl items-center justify-center px-2.5 py-[15px] w-[299px]"
+          className={`bg-neutral-500 rounded-3xl items-center justify-center px-2.5 h-[54px] w-[299px] ${isSubmitting ? 'opacity-70' : ''}`}
           onPress={handleComplete}
+          disabled={isSubmitting}
         >
-          <Text className="text-text-400 text-subtitle text-center font-sans">완료</Text>
+          {isSubmitting ? (
+            <ActivityIndicator color="#fff" />
+          ) : (
+            <Text className="text-text-400 text-subtitle text-center font-sans">완료</Text>
+          )}
         </Pressable>
       </View>
     </View>

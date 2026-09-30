@@ -11,7 +11,7 @@ import { AppHeader } from '@/shared/ui';
 export const RecipePage: React.FC = () => {
   const router = useRouter();
   const [category, setCategory] = useState<RecipeCategory>('전체');
-  const { recipes, isLoading, error } = useRecipesList(category);
+  const { recipes, isLoading, error, refresh } = useRecipesList(category);
 
   return (
     <ScrollView className="flex-1 bg-white" contentContainerStyle={{ paddingBottom: 140 }}>
@@ -31,14 +31,21 @@ export const RecipePage: React.FC = () => {
 
       <View className="px-screen md:px-10 lg:px-20 pt-[52px]">
         {isLoading ? (
-          <View className="items-center py-10">
+          <View className="items-center py-10 gap-4">
             <ActivityIndicator size="large" color="#A2CD87" />
+            {/* 처음 추천받을 때는 AI가 레시피를 만들어 몇 초 걸릴 수 있음 */}
+            <Text className="text-text14 text-text-200 font-sans">냉장고 재료로 레시피를 찾고 있어요</Text>
           </View>
         ) : error ? (
-          <Text className="text-text14 text-text-200 font-sans text-center py-10">{error}</Text>
+          <View className="items-center py-10 gap-4">
+            <Text className="text-text14 text-text-200 font-sans text-center">{error}</Text>
+            <Pressable onPress={refresh} hitSlop={8}>
+              <Text className="text-text14 font-medium font-sans text-text-100">다시 시도</Text>
+            </Pressable>
+          </View>
         ) : recipes.length === 0 ? (
           <Text className="text-text14 text-text-200 font-sans text-center py-10">
-            추천할 수 있는 레시피가 없어요.
+            추천할 수 있는 레시피가 없어요.{'\n'}냉장고에 재료를 등록하면 레시피를 추천해 드려요.
           </Text>
         ) : (
           <View className="gap-[26px]">

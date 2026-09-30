@@ -125,3 +125,21 @@ export interface IngredientUpdateApiResponse {
     message: string;
   };
 }
+
+export interface IngredientCatalogItem {
+  ingredientCatalogId: number;
+  name: string;
+  categoryId: number;
+  defaultUnitId: number;
+}
+
+export interface IngredientCatalogSearchApiResponse {
+  success: boolean;
+  data: {
+    items: IngredientCatalogItem[];
+  } | null;
+  error: null | {
+    code: string;
+    message: string;
+  };
+}
