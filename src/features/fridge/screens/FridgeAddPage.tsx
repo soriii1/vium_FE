@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, ScrollView, Pressable, Alert, TextInput, ActivityIndicator } from 'react-native';
 import { useRouter } from 'expo-router';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ImageUpload, LabelInput, LabelInputWithUnit, DatePicker, Button } from '@/shared/ui';
 import { useIngredientRegister } from '../lib/useIngredientRegister';
 import { StorageMethodSelect, STORAGE_METHOD_OPTIONS } from '../ui/StorageMethodSelect';
@@ -9,6 +10,7 @@ import BackIcon from '@/../assets/icons/back-icon.svg';
 
 export const FridgeAddPage: React.FC = () => {
   const router = useRouter();
+  const insets = useSafeAreaInsets();
   const { register, isLoading } = useIngredientRegister();
   const [imageUri, setImageUri] = useState<string | undefined>(undefined);
   const [name, setName] = useState('');
@@ -70,7 +72,11 @@ export const FridgeAddPage: React.FC = () => {
 
   return (
     <View className="flex-1 bg-white">
-      <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
+      <ScrollView
+        className="flex-1"
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: 32 }}
+      >
         <View className="pt-20 px-7 gap-3">
           <View className="bg-neutral-50 h-[28px] w-[79px] items-center justify-center">
             <Text className="text-text14 text-neutral-300 font-medium font-sans">
@@ -130,7 +136,8 @@ export const FridgeAddPage: React.FC = () => {
         </View>
       </ScrollView>
 
-      <View className="px-12 pb-[100px] items-center">
+      {/* 이 화면은 하단 탭이 없어서 기기 하단 안전 영역만큼만 띄움 */}
+      <View className="px-12 pt-4 items-center" style={{ paddingBottom: Math.max(insets.bottom, 16) + 24 }}>
         {isLoading ? (
           <View className="bg-neutral-500 h-[68px] w-[299px] rounded-3xl items-center justify-center">
             <ActivityIndicator color="#fff" />
