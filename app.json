@@ -18,7 +18,12 @@
       "predictiveBackGestureEnabled": false
     },
     "web": {
-      "output": "static"
+      "output": "static",
+      "favicon": "./public/favicon.png",
+      "name": "ViUM",
+      "shortName": "ViUM",
+      "themeColor": "#ffffff",
+      "backgroundColor": "#ffffff"
     },
     "plugins": [
       [
