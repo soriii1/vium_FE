@@ -6,6 +6,7 @@ import { RecipeCategory } from '../types';
 import { useRecipesList } from '../lib/useRecipesList';
 import { RecipeCategoryFilter } from '../ui/RecipeCategoryFilter';
 import { RecipeListCard } from '../ui/RecipeListCard';
+import { Logo } from '@/shared/ui';
 
 export const RecipePage: React.FC = () => {
   const router = useRouter();
@@ -15,9 +16,7 @@ export const RecipePage: React.FC = () => {
   return (
     <ScrollView className="flex-1 bg-white" contentContainerStyle={{ paddingBottom: 140 }}>
       <View className="px-5 md:px-10 lg:px-20 pt-[74px]">
-        <View className="bg-neutral-50 h-7 w-[79px] items-center justify-center">
-          <Text className="text-text14 text-neutral-300 font-medium font-sans">Logo</Text>
-        </View>
+        <Logo />
       </View>
 
       <View className="px-5 md:px-10 lg:px-20 pt-[26px] gap-[26px]">

@@ -3,6 +3,7 @@ import { View, Text, ScrollView, Pressable, ActivityIndicator } from 'react-nati
 import { useRouter } from 'expo-router';
 import { useIngredientsList } from '../lib/useIngredientsList';
 import { fridgeCleanupStore } from '../lib/fridgeCleanupStore';
+import { Logo } from '@/shared/ui';
 
 export const FridgeCleanupSelectPage: React.FC = () => {
   const router = useRouter();
@@ -31,11 +32,7 @@ export const FridgeCleanupSelectPage: React.FC = () => {
     <View className="flex-1 bg-white">
       <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
         <View className="px-5 md:px-10 lg:px-20 pt-[74px]">
-          <View className="bg-neutral-50 h-[28px] w-[79px] items-center justify-center">
-            <Text className="text-text14 text-neutral-300 font-medium font-sans">
-              Logo
-            </Text>
-          </View>
+          <Logo />
         </View>
 
         <View className="flex-1 px-5 md:px-10 lg:px-20 pt-[64px] items-center">

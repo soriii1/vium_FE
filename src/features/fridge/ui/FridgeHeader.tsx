@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, Pressable } from 'react-native';
 import BackIcon from '@/../assets/icons/back-icon.svg';
+import { Logo } from '@/shared/ui';
 
 interface FridgeHeaderProps {
   title: string;
@@ -14,7 +15,8 @@ export const FridgeHeader: React.FC<FridgeHeaderProps> = ({
   onManagePress,
 }) => {
   return (
-    <View className="px-4 md:px-8 lg:px-16 pt-16 pb-4 mt-[40px] max-w-[1200px] mx-auto w-full">
+    <View className="px-4 md:px-8 lg:px-16 pt-[74px] pb-4 max-w-[1200px] mx-auto w-full">
+      <Logo style={{ marginBottom: 16 }} />
       {/* Back Button and Title */}
       <View className="flex-row items-center mb-2">
         <Pressable onPress={onBackPress} className="mr-2 md:mr-4">

@@ -4,6 +4,7 @@ import Slider from '@react-native-community/slider';
 import { useRouter } from 'expo-router';
 import { useFridgeCleanupStore } from '../lib/fridgeCleanupStore';
 import { useFridgeCleanupFinish } from '../lib/useFridgeCleanupFinish';
+import { Logo } from '@/shared/ui';
 
 export const FridgeCleanupAmountPage: React.FC = () => {
   const router = useRouter();
@@ -36,11 +37,7 @@ export const FridgeCleanupAmountPage: React.FC = () => {
     <View className="flex-1 bg-white">
       <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
         <View className="px-5 md:px-10 lg:px-20 pt-[74px]">
-          <View className="bg-neutral-50 h-[28px] w-[79px] items-center justify-center">
-            <Text className="text-text14 text-neutral-300 font-medium font-sans">
-              Logo
-            </Text>
-          </View>
+          <Logo />
         </View>
 
         <View className="flex-1 px-5 md:px-10 lg:px-20 pt-[64px] items-center">

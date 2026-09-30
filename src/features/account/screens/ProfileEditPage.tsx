@@ -2,7 +2,7 @@ import React from 'react';
 import { KeyboardAvoidingView, Platform, Pressable, ScrollView, Text, TextInput, View } from 'react-native';
 import { Image } from 'expo-image';
 import { useRouter } from 'expo-router';
-import { Button } from '@/shared/ui';
+import { Button, Logo } from '@/shared/ui';
 import BackIcon from '@/../assets/icons/back-icon.svg';
 import PhotoIcon from '@/../assets/icons/photo-icon.svg';
 import { NICKNAME_MAX_LENGTH, useProfileEdit } from '../lib/useProfileEdit';
@@ -34,7 +34,8 @@ export const ProfileEditPage: React.FC = () => {
         contentContainerStyle={{ flexGrow: 1 }}
         keyboardShouldPersistTaps="handled"
       >
-        <View className="px-5 md:px-10 lg:px-20 pt-[74px]">
+        <View className="px-5 md:px-10 lg:px-20 pt-[74px] gap-10">
+          <Logo />
           <Pressable onPress={() => router.back()} className="flex-row items-center gap-4 self-start">
             <BackIcon width={30} height={30} color="#000000" />
             <Text className="text-title font-medium font-sans text-black">프로필 수정</Text>

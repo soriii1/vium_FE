@@ -9,7 +9,7 @@ import { FridgeHeader } from '../ui/FridgeHeader';
 import { FridgeGrid } from '../ui/FridgeGrid';
 import { FridgeCleanupModal } from '../ui/FridgeCleanupModal';
 import { useMyProfile } from '@/features/account';
-import { AddButton, Card } from '@/shared/ui';
+import { AddButton, Card, Logo } from '@/shared/ui';
 import BackIcon from '@/../assets/icons/back-icon.svg';
 import TrashIcon from '@/../assets/icons/trash-icon.svg';
 
@@ -123,7 +123,8 @@ export const FridgePage = () => {
           onManagePress={() => setIsDeleteMode(true)}
         />
       ) : (
-        <View className="px-4 md:px-8 lg:px-16 pt-16 pb-4 mt-[40px] max-w-[1200px] mx-auto w-full">
+        <View className="px-4 md:px-8 lg:px-16 pt-[74px] pb-4 max-w-[1200px] mx-auto w-full">
+          <Logo style={{ marginBottom: 16 }} />
           <View className="flex-row items-center mb-[27px]">
             <Pressable onPress={handleCancelDelete} className="mr-4 md:mr-6">
               <BackIcon width={24} height={24} color="#333333" />

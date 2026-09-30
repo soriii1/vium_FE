@@ -7,6 +7,7 @@ import { useRecipeDetail } from '../lib/useRecipeDetail';
 import { recipeCookStore } from '../lib/recipeCookStore';
 import { RecipeIngredientCircle } from '../ui/RecipeIngredientCircle';
 import { RecipeStepCard } from '../ui/RecipeStepCard';
+import { Logo } from '@/shared/ui';
 
 export const RecipeDetailPage: React.FC = () => {
   const router = useRouter();
@@ -41,9 +42,7 @@ export const RecipeDetailPage: React.FC = () => {
     <View className="flex-1 bg-white">
       <ScrollView className="flex-1" contentContainerStyle={{ paddingBottom: 60 }}>
         <View className="px-5 md:px-10 lg:px-20 pt-[74px]">
-          <View className="bg-neutral-50 h-7 w-[79px] items-center justify-center">
-            <Text className="text-text14 text-neutral-300 font-medium font-sans">Logo</Text>
-          </View>
+          <Logo />
         </View>
 
         <View className="px-5 md:px-10 lg:px-20 pt-[47px] items-center">

@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, ScrollView, TouchableOpacity, ActivityIndicator, Pressable } from 'react-native';
 import { Image } from 'expo-image';
 import { useRouter, useLocalSearchParams } from 'expo-router';
-import { StatusBadge, DetailInfoRow } from '@/shared/ui';
+import { StatusBadge, DetailInfoRow, Logo } from '@/shared/ui';
 import { useIngredientDetail } from '../lib/useIngredientDetail';
 import BackIcon from '@/../assets/icons/back-icon.svg';
 import EditIcon from '@/../assets/icons/edit-icon.svg';
@@ -45,13 +45,8 @@ export const FridgeDetailPage = () => {
           {/* Status Bar Spacer */}
           <View className="h-[62px]" />
 
-          {/* Logo */}
           <View className="px-7 h-7 justify-center">
-            <View className="w-[79px] h-7 items-center justify-center">
-              <Text className="text-text14 font-sans text-text-100">
-                Logo
-              </Text>
-            </View>
+            <Logo />
           </View>
         </View>
 
