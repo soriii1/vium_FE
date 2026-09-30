@@ -5,105 +5,67 @@ Read the exact versioned docs at https://docs.expo.dev/versions/v54.0.0/ before 
 
 ## Project Structure
 
-### FSD (Feature-Sliced Design) Architecture
-This project follows **Feature-Sliced Design** architecture principles. All code must be organized according to FSD layers and rules.
+### Feature-Based Architecture
+Code is grouped by **feature (domain)**. Routing lives in `app/` (Expo Router), everything else in `src/`.
 
-#### FSD Layers (from top to bottom)
-1. **app/** - Application initialization (providers, router setup)
-2. **pages/** - Route pages (one page per route)
-3. **widgets/** - Composite UI blocks (shared across multiple pages)
-4. **features/** - Business logic features (user scenarios, domain logic)
-5. **shared/** - Reusable utilities and UI components (no business logic)
-
-#### FSD Rules
-- **Feature folder structure**:
-  ```
-  features/{feature-name}/
-  ├── api/          # API calls for this feature
-  ├── lib/          # Business logic, hooks, utils
-  ├── types/        # TypeScript types for this feature
-  ├── ui/           # Feature-specific UI components
-  └── index.ts      # Public exports
-  ```
-- **Shared layer structure**:
-  ```
-  shared/
-  ├── api/          # Base API client (axios instance)
-  ├── ui/           # Reusable UI components (no business logic)
-  └── lib/          # Generic utilities (formatters, validators)
-  ```
-- **Import rules**:
-  - Lower layers can NOT import from upper layers
-  - Features can NOT import from other features directly
-  - Shared layer can NOT contain business logic
-  - All feature exports must go through `index.ts` (Public API)
-- **What goes where**:
-  - Feature-specific types → `features/{name}/types/`
-  - Feature API calls → `features/{name}/api/`
-  - Feature hooks → `features/{name}/lib/`
-  - Feature UI components → `features/{name}/ui/`
-  - Generic UI components → `shared/ui/`
-  - Base API client → `shared/api/`
-
-#### Example: Ingredient Feature
 ```
-features/ingredient/
-├── api/
-│   └── ingredientsApi.ts       # getIngredients(), registerIngredient()
-├── lib/
-│   ├── dateUtils.ts            # calculateStatus(), formatDday()
-│   ├── ingredientMapper.ts     # Backend to frontend mapping
-│   ├── useIngredientsList.ts   # List management hook
-│   ├── useIngredientRegister.ts # Registration hook
-│   └── useIngredientDetail.ts  # Detail fetching hook
-├── types/
-│   └── index.ts                # FridgeItem, IngredientApiResponse
-├── ui/
-│   ├── FridgeGrid.tsx          # Grid display component
-│   └── FridgeHeader.tsx        # Header component
-└── index.ts                    # Export all public APIs
+app/                              # Expo Router routes ONLY (render a screen, nothing else)
+├── _layout.tsx                   # Root Stack + Stack.Protected (login guard)
+├── index.tsx                     # Redirect: logged in → /main, else → /splash
+├── onboarding.tsx                # Logged-in only (right after sign-up)
+├── debug.tsx                     # Component showcase (/debug)
+├── (auth)/                       # Logged-out only: splash, login, signUp, profile
+└── (tabs)/                       # Logged-in only, bottom tab bar
+    ├── _layout.tsx               # Tabs + custom tabBar (shared/ui/BottomNavigation)
+    ├── main.tsx
+    ├── report.tsx                # Hidden tab (href: null), keeps the tab bar
+    ├── fridge/                   # _layout(Stack), index, [id], add, cleanup/*
+    ├── recipe/                   # _layout(Stack), index, [id], [id]/add, [id]/waste
+    └── mypage/                   # _layout(Stack), index, edit
+
+src/
+├── features/
+│   └── {feature}/                # auth, home, fridge, recipe, report, account
+│       ├── api/                  # API calls (apiClient)
+│       ├── lib/                  # Hooks, stores, mappers, utils
+│       ├── types/                # Feature types (API request/response, UI models)
+│       ├── ui/                   # Feature components
+│       ├── screens/              # Full screens rendered by app/ routes
+│       └── index.ts              # Public API (screens + what other features need)
+├── shared/                       # No feature/business knowledge
+│   ├── api/                      # Base axios client (token + refresh interceptors)
+│   ├── lib/                      # Storage, session user, generic hooks
+│   └── ui/                       # Generic UI components (incl. NavBar, BottomNavigation)
+└── providers/                    # AppProvider (fonts, splash)
+
+assets/
+├── fonts/                        # Paperlogy font files
+└── icons/                        # SVG icon files
 ```
+
+Route groups like `(tabs)` do not appear in URLs — `/fridge/3` maps to `app/(tabs)/fridge/[id].tsx`.
+
+### Architecture Rules
+- `app/` route files only import a screen from a feature's public API and render it.
+  Read route params (`useLocalSearchParams`) inside the screen, not in the route file.
+- Inside a feature, use relative imports (`../lib/useFoo`). Never import your own feature's `index.ts` (circular).
+- A feature MAY use another feature, but **only through its `index.ts`**. Export only what is actually needed.
+- `shared/` must NOT import from `features/`. If a component needs feature types, it belongs in that feature's `ui/`.
+- Screens that should keep the bottom tab bar must be listed in `VISIBLE_PATTERNS` in `shared/ui/BottomNavigation.tsx`,
+  and leave bottom space for it (`contentContainerStyle={{ paddingBottom: 140 }}`).
 
 ### Import Path Rules
 - Use `@/` alias for all imports from `src/` directory
 - Asset imports: `@/../assets/` for files in the `assets/` directory
-- **Always import from feature's public API** (`features/{name}/index.ts`)
-- Example:
   ```tsx
   // ✅ CORRECT
-  import { useIngredientsList, FridgeGrid } from '@/features/ingredient';
+  import { FridgePage } from '@/features/fridge';          // route file / other feature
+  import { useIngredientsList } from '../lib/useIngredientsList'; // inside features/fridge
   import { Button } from '@/shared/ui';
 
-  // ❌ INCORRECT - Don't bypass public API
-  import { useIngredientsList } from '@/features/ingredient/lib/useIngredientsList';
+  // ❌ INCORRECT
+  import { useIngredientsList } from '@/features/fridge/lib/useIngredientsList'; // bypasses public API
   ```
-
-### Directory Structure
-```
-src/
-├── app/              # Expo Router + App initialization
-│   ├── providers/    # App-level providers (fonts, themes, etc.)
-│   └── *.tsx        # Route files
-├── pages/            # Page components (one per route)
-│   └── {page}/
-│       └── ui/       # Page UI components
-├── widgets/          # Composite UI blocks (shared across pages)
-├── features/         # Business features
-│   └── {feature}/
-│       ├── api/      # API calls
-│       ├── lib/      # Business logic, hooks, utils
-│       ├── types/    # Feature types
-│       ├── ui/       # Feature UI components
-│       └── index.ts  # Public API
-└── shared/           # Reusable code (no business logic)
-    ├── api/          # Base API client
-    ├── ui/           # Generic UI components
-    └── lib/          # Generic utilities
-
-assets/
-├── fonts/           # Paperlogy font files
-└── icons/           # SVG icon files
-```
 
 ## Styling Rules
 
@@ -255,7 +217,7 @@ export { Input } from './Input';
 ### Safe to Modify
 - `app.json` - App configuration and plugins
 - `package.json` - Dependencies
-- `src/app/providers/index.tsx` - App providers
+- `src/providers/AppProvider.tsx` - App providers
 
 ## Development Workflow
 
@@ -266,13 +228,13 @@ export { Input } from './Input';
 4. Match exact spacing, colors, and typography from Figma
 
 ### Adding New Features
-1. Create page in `src/app/`
-2. Use shared components from `@/shared/ui`
-3. Follow existing patterns
+1. Put the screen in `src/features/{feature}/screens/` and export it from the feature's `index.ts`
+2. Add a route file under `app/` (inside `(tabs)` or `(auth)` as appropriate) that renders the screen
+3. Use shared components from `@/shared/ui`
 4. Use `@/` import alias
 
 ### Debug and Testing
-- Debug page: `src/app/debug.tsx` (accessible at `/debug`)
+- Debug page: `app/debug.tsx` (accessible at `/debug`)
 - Use for component showcase and testing
 - Keep updated with new components
 
@@ -287,8 +249,9 @@ This project uses **axios** for all HTTP requests. The base client is configured
 import axios from 'axios';
 import Constants from 'expo-constants';
 
-const API_BASE_URL = Constants.expoConfig?.extra?.apiBaseUrl
-  || process.env.EXPO_PUBLIC_API_BASE_URL
+// .env (personal, e.g. local server) overrides app.json (deployed server)
+const API_BASE_URL = process.env.EXPO_PUBLIC_API_BASE_URL
+  || Constants.expoConfig?.extra?.apiBaseUrl
   || 'http://localhost:8080';
 
 export const apiClient = axios.create({
@@ -320,7 +283,7 @@ And in `app.json`:
 API functions should be in `features/{feature}/api/`:
 
 ```tsx
-// features/ingredient/api/ingredientsApi.ts
+// features/fridge/api/ingredientsApi.ts
 import { apiClient } from '@/shared/api/client';
 import { IngredientsListApiResponse, IngredientRegisterRequest } from '../types';
 
@@ -358,7 +321,7 @@ export const getIngredientDetail = async (
 Wrap API calls in custom hooks in `features/{feature}/lib/`:
 
 ```tsx
-// features/ingredient/lib/useIngredientsList.ts
+// features/fridge/lib/useIngredientsList.ts
 import { useState, useEffect } from 'react';
 import { getIngredients } from '../api/ingredientsApi';
 import { FridgeItem } from '../types';
@@ -399,7 +362,7 @@ export const useIngredientsList = () => {
 Create mapper functions to transform backend responses to frontend types:
 
 ```tsx
-// features/ingredient/lib/ingredientMapper.ts
+// features/fridge/lib/ingredientMapper.ts
 import { IngredientApiResponse, FridgeItemDetail } from '../types';
 import { calculateStatus, formatDday, formatDate } from './dateUtils';
 
@@ -546,13 +509,15 @@ const handleNavItemPress = (item) => {
 ❌ Do NOT update state before navigating with router (causes React errors)
 ❌ Do NOT use fixed widths without `max-w-*` for responsive layouts
 
-### FSD Architecture
-❌ Do NOT put business logic in `shared/` layer
+### Architecture
+❌ Do NOT put business logic or feature imports in `shared/`
 ❌ Do NOT put feature-specific types in `shared/types/`
-❌ Do NOT bypass feature's public API (always import from `features/{name}/index.ts`)
-❌ Do NOT import from other features directly (use shared layer or widgets)
+❌ Do NOT bypass another feature's public API (import from `@/features/{name}` only)
+❌ Do NOT import your own feature through `@/features/{name}` (use relative paths)
+❌ Do NOT put screen logic in `app/` route files
 ❌ Do NOT put API calls in `shared/api/` (only base axios client goes there)
 ❌ Do NOT create feature-specific UI in `shared/ui/` (use `features/{name}/ui/`)
+❌ Do NOT use `router.push` to switch tabs (use `router.navigate`; `push` is for screens inside a tab's stack)
 ❌ Do NOT create mock data files in `shared/mock/` (use real API integration)
 
 ### API Integration

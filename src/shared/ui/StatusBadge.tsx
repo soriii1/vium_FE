@@ -1,9 +1,7 @@
 import React from 'react';
 import { Text, View } from 'react-native';
-import { FridgeItemStatus } from '@/features/ingredient/types';
-
 interface StatusBadgeProps {
-  status: FridgeItemStatus;
+  status: '위험' | '보통' | '양호';
 }
 
 export const StatusBadge: React.FC<StatusBadgeProps> = ({ status }) => {

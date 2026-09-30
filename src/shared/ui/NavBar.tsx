@@ -25,7 +25,8 @@ export const NavBar: React.FC = () => {
   const handlePress = (route: string) => {
     // 이미 해당 탭의 루트 화면이면 이동하지 않음
     if (pathname === route) return;
-    router.push(route as any);
+    // Tabs 안에서는 navigate가 기존 탭으로 전환 (push는 화면을 계속 쌓음)
+    router.navigate(route as any);
   };
 
   return (
