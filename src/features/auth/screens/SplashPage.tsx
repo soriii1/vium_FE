@@ -10,7 +10,7 @@ export const SplashPage = () => {
       <View className="flex-1 items-center justify-center px-screen md:px-10 lg:px-20">
         <View className="items-center">
           <Logo width={200} />
-          <Text className="text-subtitle md:text-[24px] lg:text-[28px] font-medium text-text-100 text-center mt-4 font-sans">
+          <Text className="mt-[24px] text-subtitle md:text-[24px] lg:text-[28px] font-medium text-text-100 text-center mt-4 font-sans">
             나만의 폐기관리 도우미
           </Text>
         </View>
