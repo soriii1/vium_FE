@@ -2,9 +2,6 @@ import { Alert } from 'react-native';
 import { signUpDraftStore } from './signUpDraftStore';
 import { PASSWORD_MIN_LENGTH, isPasswordTooLong, isValidEmail } from './validators';
 
-/**
- * 회원가입 1단계: 이메일/비밀번호 검증 후 2단계(닉네임)로 넘길 값을 보관
- */
 export const useSignUpCredentials = () => {
   const checkEmail = (email: string) => {
     if (!email.trim()) {

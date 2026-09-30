@@ -1,8 +1,5 @@
 import { FridgeItemStatus } from '../types';
 
-/**
- * 두 날짜 사이의 일수 차이를 계산
- */
 export const getDaysDifference = (targetDate: string, baseDate?: Date): number => {
   // ISO 형식의 날짜 문자열을 로컬 날짜로 파싱
   const targetParts = targetDate.split('T')[0].split('-');

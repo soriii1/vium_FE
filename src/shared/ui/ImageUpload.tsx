@@ -15,7 +15,6 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
 }) => {
   return (
     <View className="relative w-full h-[241px] rounded-lg" style={style}>
-      {/* Background Image or Placeholder */}
       <Pressable onPress={onPress} className="w-full h-full rounded-lg overflow-hidden bg-neutral-50">
         {imageUri ? (
           <Image
@@ -28,7 +27,6 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
         )}
       </Pressable>
 
-      {/* Camera Icon Button */}
       <Pressable
         onPress={onPress}
         className="absolute right-3 bottom-3 w-[34px] h-[34px]"

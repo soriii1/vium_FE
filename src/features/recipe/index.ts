@@ -1,4 +1,3 @@
-// screens
 export { RecipePage } from './screens/RecipePage';
 export { RecipeDetailPage } from './screens/RecipeDetailPage';
 export { RecipeWastePage } from './screens/RecipeWastePage';

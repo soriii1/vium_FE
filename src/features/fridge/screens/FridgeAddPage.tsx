@@ -128,7 +128,6 @@ export const FridgeAddPage: React.FC = () => {
         </View>
       </ScrollView>
 
-      {/* 다른 화면(레시피·냉장고 정리)과 같은 위치에 버튼 고정 */}
       <View className="px-12 pt-4 pb-[100px] items-center">
         {/* 등록 중에도 버튼 크기가 바뀌지 않도록 높이 고정, 내용만 교체 */}
         <Pressable

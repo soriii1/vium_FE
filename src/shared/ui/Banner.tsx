@@ -70,7 +70,6 @@ export const Banner: React.FC<BannerProps> = ({ variant = 'tomato', onPress, sty
   const initialIndex = Math.max(0, SLIDES.findIndex((slide) => slide.variant === variant));
   const [activeIndex, setActiveIndex] = useState(initialIndex);
   const [width, setWidth] = useState(0);
-  // 자동 넘김을 멈춰야 하는 상황들
   const [isTouching, setIsTouching] = useState(false);
   const [isFocused, setIsFocused] = useState(true);
   const [isAppActive, setIsAppActive] = useState(AppState.currentState === 'active');
@@ -172,7 +171,6 @@ export const Banner: React.FC<BannerProps> = ({ variant = 'tomato', onPress, sty
         </ScrollView>
       </View>
 
-      {/* 위치 표시 */}
       <View className="flex-row items-center justify-center gap-[11px] mt-[19px]">
         {SLIDES.map((slide, index) => (
           <Pressable

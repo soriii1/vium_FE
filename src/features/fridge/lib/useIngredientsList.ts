@@ -39,7 +39,6 @@ export const useIngredientsList = () => {
     }
   }, []);
 
-  // 화면에 들어올 때마다 갱신 (등록·수정 화면에서 돌아온 경우 등)
   useFocusEffect(
     useCallback(() => {
       loadIngredients();

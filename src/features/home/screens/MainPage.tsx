@@ -50,7 +50,6 @@ export const MainPage = () => {
           <View className="items-center gap-[53px]">
             <Banner onPress={handleBannerPress} />
 
-            {/* Menu Grid */}
             <View className="w-full items-center gap-10">
               <View className="w-full flex-row flex-wrap gap-y-8">
                 {menuItems.map((item) => (
@@ -70,7 +69,6 @@ export const MainPage = () => {
             </View>
           </View>
 
-          {/* Recipe Section */}
           <View className="gap-4">
             <Pressable
               className="flex-row items-center justify-between"

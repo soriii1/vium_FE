@@ -16,7 +16,6 @@ export const useIngredientUpload = () => {
       return false;
     }
 
-    // 카메라 권한 확인
     const { status } = await ImagePicker.getCameraPermissionsAsync();
     console.log('Camera permission status:', status);
     return status !== 'denied';
@@ -28,7 +27,6 @@ export const useIngredientUpload = () => {
       return pickImageFromWebCamera();
     }
 
-    // 카메라 사용 가능 여부 확인
     const available = await isCameraAvailable();
 
     if (!available) {
@@ -39,7 +37,6 @@ export const useIngredientUpload = () => {
       return null;
     }
 
-    // 카메라 권한 요청
     const { status } = await ImagePicker.requestCameraPermissionsAsync();
 
     if (status !== 'granted') {
@@ -48,7 +45,6 @@ export const useIngredientUpload = () => {
     }
 
     try {
-      // 카메라 실행
       const result = await ImagePicker.launchCameraAsync({
         mediaTypes: ['images'],
         allowsEditing: true,
@@ -72,7 +68,6 @@ export const useIngredientUpload = () => {
       return pickImageFromWebGallery();
     }
 
-    // 미디어 라이브러리 권한 요청
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
     if (status !== 'granted') {
@@ -80,7 +75,6 @@ export const useIngredientUpload = () => {
       return null;
     }
 
-    // 갤러리에서 이미지 선택
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ['images'],
       allowsEditing: true,
@@ -96,24 +90,20 @@ export const useIngredientUpload = () => {
 
   const pickImageFromWebCamera = async (): Promise<string | null> => {
     try {
-      // 웹캠 스트림 요청
       const stream = await navigator.mediaDevices.getUserMedia({
         video: { facingMode: 'environment' }, // 후면 카메라 우선
         audio: false,
       });
 
       return new Promise((resolve) => {
-        // 비디오 요소 생성
         const video = document.createElement('video');
         video.srcObject = stream;
         video.autoplay = true;
         video.playsInline = true;
 
-        // 캔버스 요소 생성
         const canvas = document.createElement('canvas');
         const context = canvas.getContext('2d');
 
-        // 오버레이 UI 생성
         const overlay = document.createElement('div');
         overlay.style.cssText = `
           position: fixed;

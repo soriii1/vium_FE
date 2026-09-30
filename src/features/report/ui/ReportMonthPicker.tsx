@@ -53,7 +53,6 @@ export const ReportMonthPicker: React.FC<ReportMonthPickerProps> = ({ value, onC
           >
             <View className="self-center w-10 h-1 rounded-full bg-neutral-50 mb-6" />
 
-            {/* 연도 이동 */}
             <View className="flex-row items-center justify-between mb-6">
               <Pressable
                 className="w-10 h-10 rounded-full items-center justify-center active:bg-neutral-10"
@@ -76,7 +75,6 @@ export const ReportMonthPicker: React.FC<ReportMonthPickerProps> = ({ value, onC
               </Pressable>
             </View>
 
-            {/* 월 그리드 */}
             <View className="flex-row flex-wrap -m-1">
               {MONTHS.map((month) => {
                 const isSelected = viewYear === value.year && month === value.month;

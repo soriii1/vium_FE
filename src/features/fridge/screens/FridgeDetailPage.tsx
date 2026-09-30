@@ -42,9 +42,7 @@ export const FridgeDetailPage = () => {
       <ScrollView className="flex-1">
         <AppHeader />
 
-        {/* Content */}
         <View className="px-screen pt-8">
-          {/* Back Button */}
           <TouchableOpacity
             onPress={() => router.back()}
             className="w-[30px] h-[30px] items-center justify-center"
@@ -52,9 +50,7 @@ export const FridgeDetailPage = () => {
             <BackIcon width={30} height={30} />
           </TouchableOpacity>
 
-          {/* Image and Details Container */}
           <View className="pt-[41px]">
-            {/* Food Image */}
             <View className="w-full h-[241px] rounded-2xl overflow-hidden bg-neutral-100">
               <Image
                 source={{ uri: carrotImage }}
@@ -63,9 +59,7 @@ export const FridgeDetailPage = () => {
               />
             </View>
 
-            {/* Details Section */}
             <View className="pt-6 px-2.5">
-              {/* Title and Status Badge */}
               <View className="flex-row justify-between items-center h-8 mb-[32px]">
                 <View className="flex-row items-center gap-2 flex-1 mr-3">
                   <Text numberOfLines={1} className="text-title font-bold font-sans text-text-100 shrink">
@@ -83,7 +77,6 @@ export const FridgeDetailPage = () => {
                 <StatusBadge status={item.status} />
               </View>
 
-              {/* Info List */}
               <View className="gap-y-4">
                 <DetailInfoRow label="양" value={item.quantity} />
                 <DetailInfoRow label="가격" value={item.price} />
@@ -95,7 +88,6 @@ export const FridgeDetailPage = () => {
         </View>
       </ScrollView>
 
-      {/* Bottom Navigation */}
     </View>
   );
 };
