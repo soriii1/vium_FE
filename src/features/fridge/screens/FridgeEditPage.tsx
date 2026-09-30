@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import { View, Text, ScrollView, Pressable, TextInput, ActivityIndicator } from 'react-native';
+import { View, Text, ScrollView, Pressable, Alert, TextInput, ActivityIndicator } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { LabelInputWithUnit, DatePicker, AppHeader } from '@/shared/ui';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import * as ImagePicker from 'expo-image-picker';
+import { ImageUpload, LabelInput, LabelInputWithUnit, DatePicker, AppHeader } from '@/shared/ui';
 import BackIcon from '@/../assets/icons/back-icon.svg';
 import { useIngredientDetail } from '../lib/useIngredientDetail';
 import { useIngredientEdit } from '../lib/useIngredientEdit';
@@ -34,11 +36,16 @@ export const FridgeEditPage: React.FC = () => {
   return <FridgeEditForm ingredient={ingredient} />;
 };
 
+/**
+ * 등록 화면(FridgeAddPage)과 같은 레이아웃에 기존 값을 채운 수정 폼
+ */
 const FridgeEditForm: React.FC<{ ingredient: IngredientApiResponse }> = ({ ingredient }) => {
   const router = useRouter();
+  const insets = useSafeAreaInsets();
   const isCatalogItem = ingredient.ingredientCatalogId !== null;
   const { save, isSaving } = useIngredientEdit(ingredient.inventoryItemId, isCatalogItem);
 
+  const [imageUri, setImageUri] = useState<string | undefined>(undefined);
   const [name, setName] = useState(ingredient.name);
   const [quantity, setQuantity] = useState(String(ingredient.initialQuantity));
   const [unitId, setUnitId] = useState(ingredient.unitId);
@@ -50,6 +57,26 @@ const FridgeEditForm: React.FC<{ ingredient: IngredientApiResponse }> = ({ ingre
   // 백엔드 수량 정밀도(소수 3자리)에 맞춰 부동소수점 오차 제거
   const processedQuantity = Math.round((ingredient.initialQuantity - ingredient.remainingQuantity) * 1000) / 1000;
 
+  // TODO: 이미지 업로드 API 연동 전 — 등록 화면과 동일하게 선택만 가능
+  const handleImagePick = async () => {
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (status !== 'granted') {
+      Alert.alert('권한 필요', '사진 라이브러리 접근 권한이 필요합니다.');
+      return;
+    }
+
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: 'images' as any,
+      allowsEditing: true,
+      aspect: [16, 9],
+      quality: 1,
+    });
+
+    if (!result.canceled && result.assets[0]) {
+      setImageUri(result.assets[0].uri);
+    }
+  };
+
   const handleSave = async () => {
     const success = await save({ name, quantity, unitId, storageMethodId, purchasedOn, expiresOn });
     if (success) router.back();
@@ -57,7 +84,12 @@ const FridgeEditForm: React.FC<{ ingredient: IngredientApiResponse }> = ({ ingre
 
   return (
     <View className="flex-1 bg-white">
-      <ScrollView className="flex-1" showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
+      <ScrollView
+        className="flex-1"
+        showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
+        contentContainerStyle={{ paddingBottom: 32 }}
+      >
         <AppHeader />
 
         <View className="px-screen gap-10 pt-10">
@@ -66,7 +98,9 @@ const FridgeEditForm: React.FC<{ ingredient: IngredientApiResponse }> = ({ ingre
           </Pressable>
 
           <View className="gap-6 w-full max-w-[346px]">
-            <View className="gap-1">
+            <ImageUpload imageUri={imageUri} onPress={handleImagePick} />
+
+            <View className="gap-[5px]">
               <TextInput
                 className={`text-title font-medium font-sans ${isCatalogItem ? 'text-neutral-300' : 'text-text-100'}`}
                 style={{ fontFamily: 'Paperlogy' }}
@@ -98,6 +132,13 @@ const FridgeEditForm: React.FC<{ ingredient: IngredientApiResponse }> = ({ ingre
                   {ingredient.unit} 이상이어야 하고, 단위는 바꿀 수 없어요
                 </Text>
               )}
+              {/* 수정 API가 가격을 받지 않아 표시만 */}
+              <LabelInput
+                label="가격"
+                value={ingredient.amount != null ? ingredient.amount.toLocaleString('ko-KR') : ''}
+                placeholder="-"
+                editable={false}
+              />
               <StorageMethodSelect label="보관방법" value={storageMethodId} onChange={setStorageMethodId} />
               <DatePicker label="등록일자" value={purchasedOn} onChange={setPurchasedOn} />
               <DatePicker label="소비기한" value={expiresOn} onChange={setExpiresOn} />
@@ -106,18 +147,20 @@ const FridgeEditForm: React.FC<{ ingredient: IngredientApiResponse }> = ({ ingre
         </View>
       </ScrollView>
 
-      <View className="px-12 pb-[100px] items-center">
-        <Pressable
-          className={`bg-neutral-500 rounded-3xl items-center justify-center px-2.5 py-[15px] w-[299px] ${isSaving ? 'opacity-50' : ''}`}
-          onPress={handleSave}
-          disabled={isSaving}
-        >
-          {isSaving ? (
+      {/* 이 화면은 하단 탭이 없어서 기기 하단 안전 영역만큼만 띄움 */}
+      <View className="px-12 pt-4 items-center" style={{ paddingBottom: Math.max(insets.bottom, 16) + 24 }}>
+        {isSaving ? (
+          <View className="bg-neutral-500 h-[68px] w-[299px] rounded-3xl items-center justify-center">
             <ActivityIndicator color="#fff" />
-          ) : (
-            <Text className="text-text-400 text-subtitle text-center font-sans">수정하기</Text>
-          )}
-        </Pressable>
+          </View>
+        ) : (
+          <Pressable
+            className="bg-neutral-500 rounded-3xl items-center justify-center px-2.5 py-[15px] w-[299px]"
+            onPress={handleSave}
+          >
+            <Text className="text-text-400 text-subtitle text-center font-sans">수정 완료</Text>
+          </Pressable>
+        )}
       </View>
     </View>
   );

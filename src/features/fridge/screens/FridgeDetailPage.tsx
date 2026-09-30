@@ -66,7 +66,7 @@ export const FridgeDetailPage = () => {
             {/* Details Section */}
             <View className="pt-6 px-2.5">
               {/* Title and Status Badge */}
-              <View className="flex-row justify-between items-center h-8 mb-[67px]">
+              <View className="flex-row justify-between items-center h-8 mb-[32px]">
                 <View className="flex-row items-center gap-2 flex-1 mr-3">
                   <Text numberOfLines={1} className="text-title font-bold font-sans text-text-100 shrink">
                     {item.title}
