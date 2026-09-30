@@ -1,10 +1,11 @@
 import React from 'react';
-import { View, Text, ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, ActivityIndicator, Pressable } from 'react-native';
 import { Image } from 'expo-image';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { StatusBadge, DetailInfoRow } from '@/shared/ui';
 import { useIngredientDetail } from '../lib/useIngredientDetail';
 import BackIcon from '@/../assets/icons/back-icon.svg';
+import EditIcon from '@/../assets/icons/edit-icon.svg';
 
 export const FridgeDetailPage = () => {
   const router = useRouter();
@@ -79,9 +80,19 @@ export const FridgeDetailPage = () => {
             <View className="pt-6 px-2.5">
               {/* Title and Status Badge */}
               <View className="flex-row justify-between items-center h-8 mb-[67px]">
-                <Text className="text-title font-bold font-sans text-text-100">
-                  {item.title}
-                </Text>
+                <View className="flex-row items-center gap-2 flex-1 mr-3">
+                  <Text numberOfLines={1} className="text-title font-bold font-sans text-text-100 shrink">
+                    {item.title}
+                  </Text>
+                  <Pressable
+                    onPress={() => router.push(`/fridge/${itemId}/edit` as any)}
+                    hitSlop={8}
+                    accessibilityRole="button"
+                    accessibilityLabel="식재료 수정"
+                  >
+                    <EditIcon width={22} height={22} color="#767676" />
+                  </Pressable>
+                </View>
                 <StatusBadge status={item.status} />
               </View>
 

@@ -5,6 +5,8 @@ import {
   IngredientRegisterApiResponse,
   IngredientStatusUpdateRequest,
   IngredientStatusUpdateApiResponse,
+  IngredientUpdateRequest,
+  IngredientUpdateApiResponse,
 } from '../types';
 
 
@@ -30,6 +32,18 @@ export const updateIngredientStatus = async (
 ): Promise<IngredientStatusUpdateApiResponse> => {
   const response = await apiClient.patch<IngredientStatusUpdateApiResponse>(
     `/api/me/ingredients/${ingredientId}/status`,
+    request
+  );
+  return response.data;
+};
+
+
+export const updateIngredient = async (
+  ingredientId: number,
+  request: IngredientUpdateRequest
+): Promise<IngredientUpdateApiResponse> => {
+  const response = await apiClient.patch<IngredientUpdateApiResponse>(
+    `/api/me/ingredients/${ingredientId}`,
     request
   );
   return response.data;

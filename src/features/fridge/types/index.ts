@@ -96,3 +96,32 @@ export interface IngredientStatusUpdateApiResponse {
     message: string;
   };
 }
+
+export interface IngredientUpdateRequest {
+  // 카탈로그 재료는 null이면 카탈로그 이름 사용, 직접 입력 재료는 필수
+  customName: string | null;
+  // 전체(최초) 수량. 남은 수량은 서버가 이미 소진·폐기한 양을 빼서 다시 계산
+  quantity: number;
+  unitId: number;
+  storageMethodId: number;
+  purchasedOn: string;
+  expiresOn: string;
+}
+
+export interface IngredientUpdateApiResponse {
+  success: boolean;
+  data: {
+    inventoryItemId: number;
+    customName: string | null;
+    quantity: number;
+    unitId: number;
+    storageMethodId: number;
+    purchasedOn: string;
+    expiresOn: string;
+    statusCode: string;
+  } | null;
+  error: null | {
+    code: string;
+    message: string;
+  };
+}
