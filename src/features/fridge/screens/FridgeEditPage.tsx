@@ -91,12 +91,13 @@ const FridgeEditForm: React.FC<{ ingredient: IngredientApiResponse }> = ({ ingre
       >
         <AppHeader />
 
-        <View className="px-screen gap-10 pt-10">
-          <Pressable onPress={() => router.back()} hitSlop={8}>
+        {/* 넓은 화면(웹·태블릿)에서도 폼이 왼쪽에 붙지 않고 하단 버튼과 같은 중앙 열에 오도록 */}
+        <View className="px-screen gap-10 pt-10 w-full max-w-[394px] self-center">
+          <Pressable onPress={() => router.back()} hitSlop={8} className="self-start">
             <BackIcon width={30} height={30} />
           </Pressable>
 
-          <View className="gap-6 w-full max-w-[346px]">
+          <View className="gap-6 w-full">
             <ImageUpload imageUri={imageUri} onPress={handleImagePick} />
 
             <View className="gap-[5px]">
